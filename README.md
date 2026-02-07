@@ -350,8 +350,8 @@ This project is licensed under the MIT License.
 ## 📞 SUPPORT
 
 Untuk pertanyaan atau dukungan teknis:
-- **Email**: [katsuyukilah@gmail.com]
-- **GitHub Issues**: [https://github.com/katsuyuki23/Dasboard-admin-development]/issues
+- **Email**: katsuyukilah@gmail.com
+- **GitHub Issues**: https://github.com/katsuyuki23/Dasboard-admin-development/issues
 
 ---
 
