@@ -1,0 +1,198 @@
+classDiagram
+    %% Eloquent Model Base
+    class Model {
+        <<abstract>>
+        +timestamps
+        +save()
+        +delete()
+        +update()
+    }
+    
+    %% User Management
+    class User {
+        +id: bigint
+        +name: string
+        +email: string
+        +password: string
+        +role: string
+        +email_verified_at: timestamp
+        +donatur() Donatur
+        +activityLogs() Collection
+    }
+    
+    class ActivityLog {
+        +id_log: bigint
+        +user_id: bigint
+        +action: string
+        +model: string
+        +model_id: bigint
+        +description: text
+        +old_values: json
+        +new_values: json
+        +user() User
+    }
+    
+    %% Children Management
+    class Anak {
+        +id_anak: bigint
+        +nomor_induk: string
+        +nik: string
+        +nama: string
+        +tanggal_lahir: date
+        +jenis_kelamin: enum
+        +status_anak: enum
+        +riwayatKesehatan() Collection
+        +riwayatPendidikan() Collection
+        +dokumen() Collection
+        +fotoKegiatan() Collection
+        +growthMonitoring() Collection
+    }
+    
+    class RiwayatKesehatan {
+        +id_kesehatan: bigint
+        +id_anak: bigint
+        +tanggal_periksa: date
+        +keluhan: string
+        +diagnosa: string
+        +tindakan: string
+        +anak() Anak
+    }
+    
+    class RiwayatPendidikan {
+        +id_pendidikan: bigint
+        +id_anak: bigint
+        +jenjang: string
+        +nama_sekolah: string
+        +tahun_ajaran: string
+        +kelas: string
+        +anak() Anak
+    }
+    
+    class DokumenAnak {
+        +id_dokumen: bigint
+        +id_anak: bigint
+        +jenis_dokumen: string
+        +nama_file: string
+        +path_file: string
+        +anak() Anak
+    }
+    
+    class FotoKegiatan {
+        +id_foto: bigint
+        +id_anak: bigint
+        +judul: string
+        +deskripsi: text
+        +path_foto: string
+        +tanggal_kegiatan: date
+        +anak() Anak
+    }
+    
+    class GrowthMonitoring {
+        +id_monitoring: bigint
+        +id_anak: bigint
+        +tanggal_ukur: date
+        +berat_badan: decimal
+        +tinggi_badan: decimal
+        +z_score_berat: decimal
+        +status_gizi: string
+        +rekomendasi_ai: text
+        +anak() Anak
+    }
+    
+    %% Donation Management
+    class Donatur {
+        +id_donatur: bigint
+        +user_id: bigint
+        +nama: string
+        +alamat: text
+        +user() User
+        +donasi() Collection
+    }
+    
+    class Donasi {
+        +id_donasi: bigint
+        +type_donasi: enum
+        +id_donatur: bigint
+        +sumber_non_donatur: string
+        +bulan: int
+        +tahun: int
+        +jumlah: decimal
+        +tanggal_catat: date
+        +donatur() Donatur
+        +transaksiKas() TransaksiKas
+    }
+    
+    %% Financial Management
+    class Kas {
+        +id_kas: bigint
+        +saldo_awal: decimal
+        +total_masuk: decimal
+        +total_keluar: decimal
+        +saldo_akhir: decimal
+        +tanggal_update: date
+        +transaksi() Collection
+    }
+    
+    class KategoriTransaksi {
+        +id_kategori: bigint
+        +nama_kategori: string
+        +jenis: enum
+        +deskripsi: text
+        +transaksi() Collection
+    }
+    
+    class TransaksiKas {
+        +id_transaksi: bigint
+        +id_kas: bigint
+        +id_kategori: bigint
+        +id_donasi: bigint
+        +jenis_transaksi: enum
+        +nominal: decimal
+        +tanggal: date
+        +keterangan: text
+        +kas() Kas
+        +kategori() KategoriTransaksi
+        +donasi() Donasi
+    }
+    
+    %% Staff Management
+    class Pengurus {
+        +id_pengurus: bigint
+        +nik: string
+        +nama: string
+        +jabatan: string
+        +status_kepegawaian: string
+        +pendidikan_terakhir: string
+    }
+    
+    %% Relationships
+    Model <|-- User
+    Model <|-- ActivityLog
+    Model <|-- Anak
+    Model <|-- RiwayatKesehatan
+    Model <|-- RiwayatPendidikan
+    Model <|-- DokumenAnak
+    Model <|-- FotoKegiatan
+    Model <|-- GrowthMonitoring
+    Model <|-- Donatur
+    Model <|-- Donasi
+    Model <|-- Kas
+    Model <|-- KategoriTransaksi
+    Model <|-- TransaksiKas
+    Model <|-- Pengurus
+    
+    User "1" --> "0..1" Donatur : has
+    User "1" --> "*" ActivityLog : creates
+    
+    Anak "1" --> "*" RiwayatKesehatan : has
+    Anak "1" --> "*" RiwayatPendidikan : has
+    Anak "1" --> "*" DokumenAnak : has
+    Anak "1" --> "*" FotoKegiatan : has
+    Anak "1" --> "*" GrowthMonitoring : has
+    
+    Donatur "1" --> "*" Donasi : makes
+    Donasi "1" --> "1" TransaksiKas : creates
+    
+    Kas "1" --> "*" TransaksiKas : contains
+    KategoriTransaksi "1" --> "*" TransaksiKas : categorizes
+    TransaksiKas "*" --> "0..1" Donasi : references

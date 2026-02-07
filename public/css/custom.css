@@ -1,0 +1,1306 @@
+/* Modern "Flup" Inspired Design */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Color System */
+    --primary: #0E4D2B;
+    /* Brand Green */
+    --primary-light: #E8F5E9;
+    --secondary: #F1C40F;
+    /* Brand Gold */
+    --secondary-light: #FFF9C4;
+
+    /* UI Colors (Light Mode Default) */
+    --bg-body: #F4F7FE;
+    --bg-card: #FFFFFF;
+    --bg-navbar: #FFFFFF;
+    /* New Variable */
+    --bg-input: #F4F7FE;
+    /* New Variable */
+    --text-main: #2B3674;
+    --text-body: #707EAE;
+    --border-color: #f0f0f0;
+
+    /* Spacing & Shapes */
+    --radius-l: 24px;
+    --radius-m: 16px;
+    --radius-s: 12px;
+
+    /* Effects */
+    --shadow-card: 0px 18px 40px rgba(112, 144, 176, 0.12);
+    --shadow-hover: 0px 22px 45px rgba(112, 144, 176, 0.18);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+    --bg-body: #0b1437;
+    /* Deep Navy Background */
+    --bg-card: #111c44;
+    /* Navy Card */
+    --text-main: #FFFFFF;
+    --text-body: #A3AED0;
+    --border-color: #2b3674;
+    --primary-light: rgba(14, 77, 43, 0.3);
+    --shadow-card: 0px 18px 40px rgba(0, 0, 0, 0.4);
+
+    /* Background Pattern handling for Dark Mode */
+    background: linear-gradient(rgba(11, 20, 55, 0.95), rgba(11, 20, 55, 0.98)), url('../assets/images/bg_pattern.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Force specific elements to adapt if they don't use vars */
+body.dark-mode .card,
+body.dark-mode .sidebar,
+body.dark-mode .navbar,
+body.dark-mode .user-menu {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .text-dark {
+    color: #fff !important;
+}
+
+body.dark-mode .bg-light {
+    background-color: #1b254b !important;
+}
+
+body.dark-mode .nav-link {
+    color: var(--text-body);
+}
+
+body.dark-mode .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .text-muted {
+    color: #8c96bc !important;
+}
+
+/* =========================================
+   FORM CONTROLS - IMPROVED VISIBILITY
+   ========================================= */
+
+/* Light Mode - Better Contrast */
+.form-control,
+.form-select {
+    background-color: #ffffff;
+    border: 2px solid #d1d5db;
+    color: #1f2937;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14, 77, 43, 0.1);
+    color: #1f2937;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+/* Input Group */
+.input-group-text {
+    background-color: #f3f4f6;
+    border: 2px solid #d1d5db;
+    color: #6b7280;
+}
+
+/* Dark Mode Overrides - Deep Green Theme */
+body.dark-mode {
+    --bg-body: #051810;
+    --bg-card: #0c2b1e;
+    --bg-navbar: #0c2b1e;
+    /* Dark Navbar */
+    --bg-input: #133d2b;
+    /* Dark inputs */
+    --text-main: #e2e8f0;
+    --text-body: #a0aec0;
+    --border-color: #1a4731;
+    --primary-light: rgba(46, 204, 113, 0.15);
+    --shadow-card: 0px 10px 30px rgba(0, 0, 0, 0.5);
+
+    background: #051810 !important;
+}
+
+/* Dark Mode Form Controls */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: var(--bg-input);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #1a4d38;
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #6b7f75;
+}
+
+body.dark-mode .form-label {
+    color: var(--text-main);
+}
+
+body.dark-mode .input-group-text {
+    background-color: var(--bg-input);
+    border-color: var(--border-color);
+    color: var(--text-body);
+}
+
+/* Force elements to adapt */
+body.dark-mode .card,
+body.dark-mode .sidebar,
+body.dark-mode .navbar,
+body.dark-mode .user-menu,
+body.dark-mode .dropdown-menu {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .bg-light,
+body.dark-mode .bg-white,
+body.dark-mode .input-group-text {
+    background-color: var(--bg-input) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: var(--bg-input) !important;
+    border-color: var(--border-color) !important;
+    color: #fff !important;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #a0aec0;
+}
+
+/* Dark Mode Tables - Aggressive Overrides */
+body.dark-mode .table,
+body.dark-mode .table> :not(caption)>*>* {
+    background-color: var(--bg-card) !important;
+    color: var(--text-body) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .table thead th,
+body.dark-mode .table.table-light thead th {
+    background-color: #133d2b !important;
+    /* Slightly lighter header */
+    color: #fff !important;
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+body.dark-mode .table tbody tr:hover,
+body.dark-mode .table-hover tbody tr:hover {
+    background-color: #1a4731 !important;
+    /* Visible hover state */
+    color: #fff !important;
+}
+
+/* Fix Bootstrap .table-light / .bg-white pollution */
+body.dark-mode .table-light,
+body.dark-mode .table-light th,
+body.dark-mode .table-light td,
+body.dark-mode .bg-white {
+    background-color: var(--bg-card) !important;
+    color: var(--text-body) !important;
+}
+
+body.dark-mode .table tbody td strong,
+body.dark-mode .table tbody td .fw-bold,
+body.dark-mode .table tbody td .text-dark {
+    color: #fff !important;
+}
+
+/* Dropdowns */
+body.dark-mode .dropdown-item {
+    color: var(--text-body);
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: #133d2b;
+    color: #fff;
+}
+
+
+/* Ensure Card Headers match Dark Mode */
+body.dark-mode .card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+/* Quick Action Buttons - Dark Mode Compatibility */
+body.dark-mode .quick-action-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Slight tint */
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color);
+}
+
+body.dark-mode .quick-action-btn i,
+body.dark-mode .quick-action-btn span {
+    color: var(--text-main) !important;
+}
+
+/* Hover State - ensure visibility */
+.quick-action-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    /* Force solid background on hover for contrast */
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+/* Hover Text Color - Always White */
+.quick-action-btn:hover i,
+.quick-action-btn:hover span,
+.quick-action-btn:hover {
+    color: #ffffff !important;
+}
+
+/* Specific tint overrides for Light Mode */
+.bg-light-primary {
+    background-color: rgba(78, 115, 223, 0.1);
+}
+
+.bg-light-success {
+    background-color: rgba(28, 200, 138, 0.1);
+}
+
+.bg-light-warning {
+    background-color: rgba(246, 194, 62, 0.1);
+}
+
+.bg-light-info {
+    background-color: rgba(54, 185, 204, 0.1);
+}
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-body);
+    /* Batik Pattern on Body with Overlay - Reduced opacity for better visibility */
+    background: linear-gradient(rgba(244, 247, 254, 0.85), rgba(244, 247, 254, 0.88)), url('../assets/images/bg_pattern.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    overflow-x: hidden;
+}
+
+/* Sidebar Redesign - Curved Box */
+.sidebar {
+    width: 280px;
+    background: var(--bg-card);
+    transition: var(--transition);
+    z-index: 1000;
+    border-right: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    /* Box Style */
+    margin: 20px;
+    border-radius: 30px;
+    height: calc(100vh - 40px);
+    overflow: hidden;
+    /* Clip inner content to radius */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .brand-section {
+    padding: 2rem 1rem;
+    text-align: center;
+    border-bottom: none;
+    margin-bottom: 1rem;
+    /* Theme Pattern Integration */
+    background: url('../assets/images/bg_pattern.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 30px 30px 0 0;
+    /* Match top corners */
+}
+
+/* Overlay for pattern readability if needed */
+.sidebar .brand-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    /* White fade to blend with site */
+    z-index: 0;
+    backdrop-filter: blur(2px);
+}
+
+.sidebar .brand-section * {
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 0.8rem;
+    filter: drop-shadow(0 5px 15px rgba(14, 77, 43, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo:hover {
+    transform: scale(1.05) rotate(3deg);
+}
+
+.brand-text {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.brand-subtext {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* Navigation Items Adjustment */
+.navbar.topbar {
+    background-color: var(--bg-navbar);
+    transition: var(--transition);
+}
+
+/* Search Wrapper Style */
+.search-wrapper {
+    background-color: var(--bg-input);
+    transition: var(--transition);
+}
+
+/* Form Controls Global Fix */
+.form-control,
+.form-select,
+.input-group-text {
+    background-color: var(--bg-input);
+    border: 1px solid transparent;
+    /* Cleaner look */
+    color: var(--text-main);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg-card);
+    /* White/Dark on focus */
+    box-shadow: 0 0 0 0.25rem var(--primary-light);
+    border-color: var(--primary);
+}
+
+.nav-pills {
+    padding: 0 16px;
+    gap: 6px;
+    overflow-y: auto;
+    flex-grow: 1;
+    /* Force Vertical Stack */
+    flex-direction: column !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+}
+
+.nav-item {
+    width: 100%;
+    /* Ensure full width items */
+}
+
+/* Custom Scrollbar for Sidebar Nav */
+.nav-pills::-webkit-scrollbar {
+    width: 4px;
+}
+
+.nav-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-body);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 16px 16px 8px;
+    opacity: 0.8;
+}
+
+.nav-link {
+    color: var(--text-body);
+    padding: 12px 18px;
+    border-radius: var(--radius-m);
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link i {
+    width: 24px;
+    margin-right: 12px;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    color: #A3AED0;
+}
+
+.nav-link:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    transform: translateX(4px);
+}
+
+.nav-link:hover i {
+    color: var(--primary);
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, var(--primary) 0%, #0a3d20 100%);
+    color: white;
+    box-shadow: 0 8px 16px rgba(14, 77, 43, 0.2);
+    font-weight: 600;
+}
+
+.nav-link.active i {
+    color: white;
+}
+
+/* User Menu pinned to bottom */
+.user-menu {
+    border-top: 1px solid #f0f0f0;
+    padding: 16px;
+    background: #fff;
+    margin-top: auto;
+    /* Push to bottom */
+}
+
+.user-profile {
+    background: #FAFCFE;
+    border-radius: var(--radius-m);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E2E8F0;
+    transition: var(--transition);
+}
+
+.user-profile:hover {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Content Area */
+.content-wrapper {
+    padding: 30px;
+}
+
+/* Modern Cards */
+.card {
+    background: var(--bg-card);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 2px solid #F4F7FE;
+    padding: 24px 30px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Dashboard Stats Cards */
+.border-start {
+    border: none !important;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.bg-light-primary {
+    background: rgba(14, 77, 43, 0.1);
+    color: var(--primary);
+}
+
+.bg-light-warning {
+    background: rgba(241, 196, 15, 0.1);
+    color: #f39c12;
+}
+
+.bg-light-success {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.bg-light-info {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+/* Buttons */
+.btn {
+    border-radius: var(--radius-m);
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #09381e;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Tables */
+.table {
+    margin: 0;
+}
+
+.table thead th {
+    background: #F4F7FE;
+    color: var(--text-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    border: none;
+    padding: 16px 24px;
+}
+
+.table thead th:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.table thead th:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody td {
+    padding: 20px 24px;
+    color: var(--text-main);
+    font-weight: 500;
+    border-bottom: 1px solid #F4F7FE;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background-color: #FAFCFE;
+}
+
+/* Badge */
+.badge {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.75em;
+    letter-spacing: 0.5px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+/* =========================================
+   Theme Switch (User Provided)
+   ========================================= */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    font-size: 14px;
+    /* Scaled down slightly for Topbar */
+    position: relative;
+    display: inline-block;
+    width: 4em;
+    height: 2.2em;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00a6ff;
+    /* Default: Day Sky */
+    transition: 0.4s;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.2em;
+    width: 1.2em;
+    border-radius: 50%;
+    left: 0.5em;
+    bottom: 0.5em;
+    background-color: #ffcf48;
+    /* Default: Sun */
+    box-shadow: 0 0 10px #ffcf48;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.81, -0.04, 0.38, 1.5);
+}
+
+/* Checked State - Night Mode (Input Checked = Night) */
+.switch input:checked+.slider {
+    background-color: #2a2a2a;
+    /* Night Sky */
+}
+
+.switch input:checked+.slider:before {
+    transform: translateX(1.8em);
+    background-color: transparent;
+    box-shadow: inset 8px -4px 0px 0px #fff;
+    /* Moon Shape */
+}
+
+.star {
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    width: 5px;
+    transition: all 0.4s;
+    height: 5px;
+    opacity: 0;
+    /* Hidden by default (Day) */
+}
+
+.star_1 {
+    left: 2.5em;
+    top: 0.5em;
+}
+
+.star_2 {
+    left: 2.2em;
+    top: 1.2em;
+}
+
+.star_3 {
+    left: 3em;
+    top: 0.9em;
+}
+
+.switch input:checked~.slider .star {
+    opacity: 1;
+    /* Visible at Night */
+}
+
+.cloud {
+    width: 3.5em;
+    position: absolute;
+    bottom: -1.4em;
+    left: -1.1em;
+    opacity: 1;
+    /* Visible by default (Day) */
+    transition: all 0.4s;
+    pointer-events: none;
+}
+
+.switch input:checked~.slider .cloud {
+    opacity: 0;
+    /* Hidden at Night */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* =========================================
+   Radial Gauges (New Metrics)
+   ========================================= */
+/* =========================================
+   Radial Gauges (New Metrics)
+   =========================================
+/* Stat Cards with Trend Indicators */
+.stat-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.trend-badge i {
+    font-size: 0.75rem;
+}
+
+.trend-up {
+    background: #d4edda;
+    color: #155724;
+}
+
+.trend-down {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.trend-neutral {
+    background: #e2e3e5;
+    color: #6c757d;
+}
+
+body.dark-mode .trend-up {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+}
+
+body.dark-mode .trend-down {
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+}
+
+body.dark-mode .trend-neutral {
+    background: rgba(149, 165, 166, 0.15);
+    color: #95a5a6;
+}
+
+body.dark-mode .stat-card {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.stat-body {
+    margin-top: 12px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-body);
+    margin: 0;
+    font-weight: 500;
+}
+
+body.dark-mode .stat-value {
+    color: #ffffff;
+}
+
+body.dark-mode .stat-label {
+    color: var(--text-body);
+}
+
+*/ .radial-card {
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    flex-direction: row-reverse;
+    /* Swap Circle (Left) and Text (Right) */
+}
+
+.radial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.radial-info {
+    z-index: 2;
+    text-align: right;
+}
+
+.radial-info h6 {
+    font-size: 0.85rem;
+    color: var(--text-body);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.radial-info h3 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+/* Dark Mode Overrides for Text */
+body.dark-mode .radial-info h6 {
+    color: #cbd5e0;
+}
+
+body.dark-mode .radial-info h3 {
+    color: #fff;
+}
+
+.radial-progress {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radial-progress svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.radial-progress circle {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+
+.progress-bg {
+    stroke: rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .progress-bg {
+    stroke: rgba(255, 255, 255, 0.05);
+}
+
+.percentage-label {
+    position: absolute;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2d3748;
+}
+
+body.dark-mode .percentage-label {
+    color: #fff;
+}
+
+.progress-value {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    transition: stroke-dashoffset 1.5s ease-out;
+}
+
+/* Pastel Variants */
+.radial-purple {
+    background: #EBEBFF;
+}
+
+.radial-pink {
+    background: #FFEBEF;
+}
+
+.radial-blue {
+    background: #EBF8FF;
+}
+
+/* Dark Mode Pastels */
+body.dark-mode .radial-purple {
+    background: #24244a;
+}
+
+body.dark-mode .radial-pink {
+    background: #3d202b;
+}
+
+body.dark-mode .radial-blue {
+    background: #1a2e3d;
+}
+
+
+/* Responsive Sidebar */
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        left: -320px;
+        /* Hide completely */
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 1050;
+        margin: 0 !important;
+        border-radius: 0 24px 24px 0 !important;
+        /* Only round right side */
+        box-shadow: none;
+        overflow-y: auto;
+        /* Ensure scrolling */
+        max-height: none !important;
+        height: auto !important;
+        /* Let top/bottom determine height */
+    }
+
+    .sidebar .brand-section {
+        border-radius: 0 24px 0 0 !important;
+    }
+
+    .sidebar.active {
+        left: 0;
+        box-shadow: 10px 0 50px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        backdrop-filter: blur(4px);
+    }
+
+    .sidebar-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Colors for progress bars */
+.radial-purple .progress-value {
+    stroke: #6C5DD3;
+}
+
+/* Purple */
+.radial-pink .progress-value {
+    stroke: #FF7598;
+}
+
+/* Pink */
+.radial-blue .progress-value {
+    stroke: #00A3FF;
+}
+
+/* Blue */
+
+
+/* =========================================
+   Quick Action Buttons (Hover Effects)
+   ========================================= */
+.quick-action-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.bg-light-primary {
+    background-color: rgba(78, 115, 223, 0.1);
+}
+
+.bg-light-success {
+    background-color: rgba(28, 200, 138, 0.1);
+}
+
+.bg-light-warning {
+    background-color: rgba(246, 194, 62, 0.1);
+}
+
+.bg-light-info {
+    background-color: rgba(54, 185, 204, 0.1);
+}
+
+.percentage-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+/* =========================================
+   Notification Floating Panel Styling
+   ========================================= */
+#notificationSidebar {
+    background: url('../assets/images/hero_kegiatan.jpg') no-repeat center center;
+    background-size: cover;
+    border: none;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+
+    /* Detached Floating Sidebar Piller - Below Header */
+    top: 90px !important;
+    height: calc(100vh - 110px) !important;
+    right: 20px !important;
+    bottom: auto !important;
+    width: 360px !important;
+    border-radius: 20px !important;
+    overflow: hidden;
+}
+
+/* ... lines 1195-1282 remain unchanged ... */
+
+/* Smooth Animation - Snappier & Smoother */
+.offcanvas {
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease-out, visibility 0.5s !important;
+}
+
+/* Animation Override - Slide in from Right with Float */
+.offcanvas.offcanvas-end {
+    transform: translateX(110%);
+    opacity: 0;
+    pointer-events: none;
+    border-left: none;
+    visibility: hidden;
+}
+
+.offcanvas.show {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+}
+
+#notificationSidebar .offcanvas-header,
+#notificationSidebar .offcanvas-body {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 2;
+}
+
+#notificationSidebar .offcanvas-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    padding: 1.5rem 1.5rem 1rem;
+}
+
+#notificationSidebar .offcanvas-body {
+    padding: 0;
+}
+
+/* Timeline Style List Items */
+#notificationSidebar .list-group-item {
+    background: transparent;
+    border: none;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+/* Vertical Line for Timeline */
+#notificationSidebar .list-group-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2.35rem;
+    /* Adjust based on valid alignment */
+    width: 2px;
+    background: #e2e8f0;
+    z-index: 0;
+}
+
+#notificationSidebar .list-group-item:first-child::before {
+    top: 50%;
+}
+
+#notificationSidebar .list-group-item:last-child::before {
+    bottom: 50%;
+}
+
+/* Timeline Dot / Icon wrapper */
+#notificationSidebar .avatar-sm {
+    position: relative;
+    z-index: 1;
+    background: white;
+    /* Cut the line */
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+    /* Gap around icon */
+}
+
+/* Hover Effect */
+#notificationSidebar .list-group-item:hover {
+    background-color: rgba(14, 77, 43, 0.05);
+    /* Light primary tint */
+}
+
+
+/* Dark Mode Support for Sidebar */
+body.dark-mode #notificationSidebar .offcanvas-header,
+body.dark-mode #notificationSidebar .offcanvas-body {
+    background: rgba(17, 28, 68, 0.95);
+    color: #ffffff;
+}
+
+body.dark-mode #notificationSidebar .list-group-item::before {
+    background: #2d3748;
+}
+
+body.dark-mode #notificationSidebar .avatar-sm {
+    background: #111c44;
+    box-shadow: 0 0 0 4px rgba(17, 28, 68, 0.8);
+}
+
+body.dark-mode #notificationSidebar .list-group-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode #notificationSidebar .text-dark {
+    color: #ffffff !important;
+}
+
+body.dark-mode #notificationSidebar .text-muted {
+    color: #a0aec0 !important;
+}

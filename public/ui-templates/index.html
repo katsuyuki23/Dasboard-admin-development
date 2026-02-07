@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPS3 UI Templates - Documentation</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background: linear-gradient(180deg, #0e4d2b 0%, #0a3d20 100%);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar h4 {
+            color: white;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 30px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #0e4d2b;
+            border-bottom: 3px solid #0e4d2b;
+            padding-bottom: 10px;
+        }
+
+        .component-preview {
+            border: 1px solid #e3e6f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fc;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-box small {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .border-left-primary {
+            border-left: 4px solid #4e73df !important;
+        }
+
+        .border-left-success {
+            border-left: 4px solid #1cc88a !important;
+        }
+
+        .border-left-info {
+            border-left: 4px solid #36b9cc !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h4><i class="fas fa-palette me-2"></i>UI Templates</h4>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#colors"><i class="fas fa-palette me-2"></i>Colors</a>
+            <a class="nav-link" href="#stats-cards"><i class="fas fa-square me-2"></i>Stats Cards</a>
+            <a class="nav-link" href="#charts"><i class="fas fa-chart-bar me-2"></i>Charts</a>
+            <a class="nav-link" href="#tables"><i class="fas fa-table me-2"></i>Tables</a>
+            <a class="nav-link" href="#forms"><i class="fas fa-edit me-2"></i>Forms</a>
+            <a class="nav-link" href="#buttons"><i class="fas fa-toggle-on me-2"></i>Buttons</a>
+            <a class="nav-link" href="#alerts"><i class="fas fa-bell me-2"></i>Alerts</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="mb-5">
+            <h1 class="display-4 fw-bold text-dark">CAPS3 UI Documentation</h1>
+            <p class="lead text-muted">Complete UI components and design system reference</p>
+        </div>
+
+        <!-- Color Palette Section -->
+        <section id="colors" class="section">
+            <h2 class="section-title"><i class="fas fa-palette me-2"></i>Color Palette</h2>
+            <div class="color-palette">
+                <div class="color-box" style="background: #0e4d2b;">
+                    Primary
+                    <small>#0e4d2b</small>
+                </div>
+                <div class="color-box" style="background: #4e73df;">
+                    Blue
+                    <small>#4e73df</small>
+                </div>
+                <div class="color-box" style="background: #1cc88a;">
+                    Success
+                    <small>#1cc88a</small>
+                </div>
+                <div class="color-box" style="background: #f6c23e;">
+                    Warning
+                    <small>#f6c23e</small>
+                </div>
+                <div class="color-box" style="background: #e74a3b;">
+                    Danger
+                    <small>#e74a3b</small>
+                </div>
+                <div class="color-box" style="background: #36b9cc;">
+                    Info
+                    <small>#36b9cc</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Cards Section -->
+        <section id="stats-cards" class="section">
+            <h2 class="section-title"><i class="fas fa-square me-2"></i>Statistics Cards</h2>
+
+            <h5 class="mb-3 fw-bold">Modern Stats Card with Trend</h5>
+            <div class="component-preview">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total Anak Asuh
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">156</div>
+                                        <small class="text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>12.5% dari bulan lalu
+                                        </small>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-child fa-2x text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Donasi Bulan Ini
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">Rp 45.000.000</div>
+                                        <small class="text-success">
+                                            <i class="fas fa-arrow-up me-1"></i>8.3% dari target
+                                        </small>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-donate fa-2x text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Total Pengurus
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">24</div>
+                                        <small class="text-muted">
+                                            <i class="fas fa-minus me-1"></i>Tidak ada perubahan
+                                        </small>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-users fa-2x text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section id="charts" class="section">
+            <h2 class="section-title"><i class="fas fa-chart-bar me-2"></i>Charts</h2>
+
+            <h5 class="mb-3 fw-bold">Modern Area Chart with Smooth Curves</h5>
+            <div class="component-preview">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 fw-bold text-dark">Tren Donasi</h6>
+                        <select class="form-select form-select-sm" style="width: 160px; border-radius: 8px;">
+                            <option selected>1 Tahun Terakhir</option>
+                            <option>6 Bulan Terakhir</option>
+                            <option>30 Hari Terakhir</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div style="height: 300px;">
+                            <canvas id="sampleAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mb-3 fw-bold mt-4">Bar Chart with Rounded Corners</h5>
+            <div class="component-preview">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h6 class="m-0 fw-bold text-dark">Segmentasi Donor</h6>
+                    </div>
+                    <div class="card-body">
+                        <div style="height: 300px;">
+                            <canvas id="sampleBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tables Section -->
+        <section id="tables" class="section">
+            <h2 class="section-title"><i class="fas fa-table me-2"></i>Tables</h2>
+
+            <h5 class="mb-3 fw-bold">Modern Data Table with Actions</h5>
+            <div class="component-preview">
+                <div class="card shadow">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Transaksi Terakhir</h6>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus me-1"></i>Tambah
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Kategori</th>
+                                        <th>Keterangan</th>
+                                        <th class="text-end">Nominal</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024-01-30</td>
+                                        <td><span class="badge bg-success">Donasi</span></td>
+                                        <td>Donasi dari PT ABC</td>
+                                        <td class="text-end text-success fw-bold">+Rp 5.000.000</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-01-29</td>
+                                        <td><span class="badge bg-danger">Pengeluaran</span></td>
+                                        <td>Pembelian sembako</td>
+                                        <td class="text-end text-danger fw-bold">-Rp 2.500.000</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-01-28</td>
+                                        <td><span class="badge bg-success">Donasi</span></td>
+                                        <td>Donasi bulanan dari Yayasan XYZ</td>
+                                        <td class="text-end text-success fw-bold">+Rp 3.000.000</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forms Section -->
+        <section id="forms" class="section">
+            <h2 class="section-title"><i class="fas fa-edit me-2"></i>Form Components</h2>
+
+            <div class="component-preview">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Nama Lengkap</label>
+                                    <input type="text" class="form-control" placeholder="Masukkan nama">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Email</label>
+                                    <input type="email" class="form-control" placeholder="email@example.com">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Kategori</label>
+                                <select class="form-select">
+                                    <option selected>Pilih kategori</option>
+                                    <option>Donasi</option>
+                                    <option>Pengeluaran</option>
+                                    <option>Operasional</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Nominal</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" placeholder="0">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Keterangan</label>
+                                <textarea class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Simpan
+                                </button>
+                                <button type="button" class="btn btn-secondary">
+                                    <i class="fas fa-times me-2"></i>Batal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buttons Section -->
+        <section id="buttons" class="section">
+            <h2 class="section-title"><i class="fas fa-toggle-on me-2"></i>Buttons</h2>
+
+            <h5 class="mb-3 fw-bold">Button Variants</h5>
+            <div class="component-preview">
+                <div class="d-flex gap-2 flex-wrap mb-3">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-info">Info</button>
+                    <button class="btn btn-warning">Warning</button>
+                    <button class="btn btn-danger">Danger</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                </div>
+
+                <h6 class="mt-4 mb-3 fw-bold">With Icons</h6>
+                <div class="d-flex gap-2 flex-wrap mb-3">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Tambah
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-save me-2"></i>Simpan
+                    </button>
+                    <button class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>Hapus
+                    </button>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-edit me-2"></i>Edit
+                    </button>
+                </div>
+
+                <h6 class="mt-4 mb-3 fw-bold">Button Sizes</h6>
+                <div class="d-flex gap-2 flex-wrap align-items-center">
+                    <button class="btn btn-primary btn-lg">Large</button>
+                    <button class="btn btn-primary">Normal</button>
+                    <button class="btn btn-primary btn-sm">Small</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerts Section -->
+        <section id="alerts" class="section">
+            <h2 class="section-title"><i class="fas fa-bell me-2"></i>Alerts & Notifications</h2>
+
+            <div class="component-preview">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Success!</strong> Data berhasil disimpan.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Error!</strong> Terjadi kesalahan saat memproses data.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning!</strong> Pastikan semua data sudah benar.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Info!</strong> Data akan diproses dalam 5 menit.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart Examples -->
+    <script>
+        // Sample Area Chart
+        const ctxArea = document.getElementById('sampleAreaChart');
+        const gradient1 = ctxArea.getContext('2d').createLinearGradient(0, 0, 0, 300);
+        gradient1.addColorStop(0, 'rgba(75, 192, 192, 0.4)');
+        gradient1.addColorStop(1, 'rgba(75, 192, 192, 0.01)');
+
+        const gradient2 = ctxArea.getContext('2d').createLinearGradient(0, 0, 0, 300);
+        gradient2.addColorStop(0, 'rgba(78, 115, 223, 0.4)');
+        gradient2.addColorStop(1, 'rgba(78, 115, 223, 0.01)');
+
+        new Chart(ctxArea, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Target',
+                        data: [45, 52, 48, 58, 55, 62, 59, 68, 65, 72, 70, 75],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: gradient1,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'Aktual',
+                        data: [40, 48, 45, 52, 50, 58, 54, 62, 60, 67, 65, 70],
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        backgroundColor: gradient2,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { borderDash: [5, 5] } }
+                }
+            }
+        });
+
+        // Sample Bar Chart
+        const ctxBar = document.getElementById('sampleBarChart');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['High Value', 'Active', 'Regular', 'One-Time', 'Inactive'],
+                datasets: [{
+                    label: 'Jumlah Donor',
+                    data: [12, 25, 18, 8, 5],
+                    backgroundColor: ['#4e73df', '#1cc88a', '#f6c23e', '#36b9cc', '#e74a3b'],
+                    borderRadius: 8,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, grid: { borderDash: [5, 5] } }
+                }
+            }
+        });
+
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Update active state
+                    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

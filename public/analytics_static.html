@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Panti Asuhan Assholihin</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <div class="d-flex"> <!-- Flex Container -->
+
+        <!-- Sidebar -->
+        <div class="sidebar d-flex flex-column flex-shrink-0">
+            <div class="brand-section">
+                <img src="assets/images/logo_yayasan.png" alt="Logo" class="sidebar-logo">
+                <div class="brand-text">YAYASAN</div>
+                <div class="brand-text">ASSHOLIHIN</div>
+                <div class="brand-subtext">Panti Asuhan</div>
+            </div>
+
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-chart-pie"></i> Analytics
+                    </a>
+                </li>
+                <div class="nav-header mt-3">DATA MASTER</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-child"></i> Data Anak Asuh
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i> Donatur
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-hand-holding-heart"></i> Data Donasi
+                    </a>
+                </li>
+                <div class="nav-header mt-3">KEUANGAN</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-wallet"></i> Transaksi Kas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-invoice-dollar"></i> Laporan Keuangan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cogs"></i> Pengaturan
+                    </a>
+                </li>
+            </ul>
+
+            <!-- User Menu moved to Topbar -->
+        </div>
+
+        <!-- Main Content Wrapper -->
+        <div class="d-flex flex-column flex-grow-1" style="height: 100vh; overflow: hidden;">
+
+            <!-- Topbar (Language School Style) -->
+            <nav
+                class="navbar topbar px-4 py-3 bg-white d-flex justify-content-between align-items-center border-bottom border-light">
+                <!-- Search -->
+                <div class="search-wrapper d-flex align-items-center bg-light rounded-pill px-3 py-2"
+                    style="width: 300px;">
+                    <i class="fas fa-search text-muted me-2"></i>
+                    <input type="text" class="form-control border-0 bg-transparent p-0"
+                        placeholder="Search analytics...">
+                </div>
+
+                <!-- Right Nav -->
+                <div class="d-flex align-items-center gap-4">
+                    <!-- Theme Switch -->
+                    <div class="theme-switch-wrapper">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider">
+                                <div class="star star_1"></div>
+                                <div class="star star_2"></div>
+                                <div class="star star_3"></div>
+                                <svg viewBox="0 0 16 16" class="cloud_1 cloud">
+                                    <path transform="matrix(.77976 0 0 .78395-299.99-418.63)" fill="#fff"
+                                        d="m391.84 540.91c-.421-.329-.949-.524-1.523-.524-1.351 0-2.451 1.084-2.485 2.435-1.395.526-2.388 1.88-2.388 3.466 0 1.874 1.385 3.423 3.182 3.667v.034h12.73v-.006c1.775-.104 3.182-1.584 3.182-3.395 0-1.747-1.309-3.186-2.994-3.379.007-.106.011-.214.011-.322 0-2.707-2.271-4.901-5.072-4.901-2.073 0-3.856 1.202-4.643 2.925">
+                                    </path>
+                                </svg>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="position-relative cursor-pointer">
+                        <i class="fas fa-bell fa-lg text-muted"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.5rem; padding: 3px 5px;">3</span>
+                    </div>
+
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle no-arrow"
+                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=0E4D2B&color=fff" alt=""
+                                class="user-avatar shadow-sm border border-2 border-white">
+                            <div class="ms-2 d-none d-sm-block text-start">
+                                <div class="fw-bold text-dark small mb-0">Admin User</div>
+                                <small class="text-muted" style="font-size: 0.7rem;">Admin</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Scrollable Page Content -->
+            <div class="flex-grow-1 overflow-auto">
+                <div class="content-wrapper container-fluid p-4">
+                    <!-- Welcome/Header Banner -->
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="card border-0 text-white overflow-hidden shadow-lg"
+                                style="border-radius: 25px; background: linear-gradient(135deg, rgba(14, 77, 43, 0.9), rgba(10, 61, 32, 0.95)), url('assets/images/bg_pattern.jpg'); background-size: cover; background-position: center;">
+                                <div class="card-body p-5 position-relative">
+                                    <div class="position-relative z-index-1">
+                                        <h1 class="display-5 fw-bold mb-2">Analytics Overview 📊</h1>
+                                        <p class="lead opacity-75 mb-0" style="max-width: 600px;">
+                                            Analisis mendalam data donasi, pengeluaran, dan perkembangan anak asuh.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENT STARTED -->
+                    <div class="container-fluid">
+                        <!-- Header -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h1 class="h3 mb-2 text-gray-800">📊 Big Data Analytics Dashboard</h1>
+                                <p class="text-muted">Real-time insights powered by Machine Learning &
+                                    DuckDB</p>
+                            </div>
+                        </div>
+
+                        <!-- Radial Gauges Row -->
+                        <div class="row mb-5">
+                            <!-- Anak Asuh Radial -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="radial-card radial-purple">
+                                    <div class="radial-info">
+                                        <h6>Anak Asuh Aktif</h6>
+                                        <h3>48</h3>
+                                        <small class="text-muted">Target: 50 Anak</small>
+                                    </div>
+                                    <div class="radial-progress">
+                                        <svg viewBox="0 0 80 80">
+                                            <circle class="progress-bg" cx="40" cy="40" r="32"></circle>
+                                            <circle class="progress-value" cx="40" cy="40" r="32"
+                                                style="stroke-dashoffset: 8;"></circle>
+                                        </svg>
+                                        <div class="percentage-label">96%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donasi Radial -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="radial-card radial-pink">
+                                    <div class="radial-info">
+                                        <h6>Donasi Bulan Ini</h6>
+                                        <h3>8.500k</h3>
+                                        <small class="text-muted">Target: 10jt</small>
+                                    </div>
+                                    <div class="radial-progress">
+                                        <svg viewBox="0 0 80 80">
+                                            <circle class="progress-bg" cx="40" cy="40" r="32"></circle>
+                                            <circle class="progress-value" cx="40" cy="40" r="32"
+                                                style="stroke-dashoffset: 30;"></circle>
+                                        </svg>
+                                        <div class="percentage-label">85%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pengurus Radial -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="radial-card radial-blue">
+                                    <div class="radial-info">
+                                        <h6>Total Pengurus</h6>
+                                        <h3>15</h3>
+                                        <small class="text-muted">Staff Aktif</small>
+                                    </div>
+                                    <div class="radial-progress">
+                                        <svg viewBox="0 0 80 80">
+                                            <circle class="progress-bg" cx="40" cy="40" r="32"></circle>
+                                            <circle class="progress-value" cx="40" cy="40" r="32"
+                                                style="stroke-dashoffset: 50;"></circle>
+                                        </svg>
+                                        <div class="percentage-label">75%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Balance & Expenses Row (Wave Chart) -->
+                        <div class="row">
+                            <!-- Wave Chart (Balance Assessment) -->
+                            <div class="col-lg-8 mb-4">
+                                <div class="card border-0 shadow-sm" style="border-radius: 24px;">
+                                    <div
+                                        class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center py-3">
+                                        <h5 class="mb-0 fw-bold text-dark">Balance Assessment</h5>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown">
+                                                This Year
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Last Year</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <h2 class="mb-0 fw-bold me-3">Rp 8.500.000</h2>
+                                            <span class="badge bg-light-success text-success px-3 py-2 rounded-pill">
+                                                <i class="fas fa-arrow-up me-1"></i> +12%
+                                            </span>
+                                        </div>
+                                        <div class="chart-container" style="position: relative; height: 300px;">
+                                            <canvas id="donasiChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Expense Doughnut (Side) -->
+                            <div class="col-lg-4 mb-4">
+                                <div class="card border-0 shadow-sm h-100" style="border-radius: 24px;">
+                                    <div class="card-header bg-transparent border-0 py-3">
+                                        <h5 class="mb-0 fw-bold text-dark">Pengeluaran</h5>
+                                    </div>
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                        <div style="height: 250px; width: 100%;">
+                                            <canvas id="expenseChart"></canvas>
+                                        </div>
+                                        <div class="mt-4 text-center">
+                                            <p class="text-muted small">Distribusi pengeluaran berdasarkan kategori.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cash Flow Forecast & Churn Analysis -->
+                        <div class="row">
+                            <!-- Cash Flow Forecast -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">💰 Prediksi Cash
+                                            Flow (3 Bulan)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bulan</th>
+                                                        <th class="text-right">Prediksi Masuk</th>
+                                                        <th class="text-right">Prediksi Keluar</th>
+                                                        <th class="text-right">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>2024-02</strong></td>
+                                                        <td class="text-right text-success">Rp 5,000,000
+                                                        </td>
+                                                        <td class="text-right text-danger">Rp 3,000,000
+                                                        </td>
+                                                        <td class="text-right"><strong>Rp
+                                                                2,000,000</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>2024-03</strong></td>
+                                                        <td class="text-right text-success">Rp 4,500,000
+                                                        </td>
+                                                        <td class="text-right text-danger">Rp 2,800,000
+                                                        </td>
+                                                        <td class="text-right"><strong>Rp
+                                                                3,700,000</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>2024-04</strong></td>
+                                                        <td class="text-right text-success">Rp 5,200,000
+                                                        </td>
+                                                        <td class="text-right text-danger">Rp 3,200,000
+                                                        </td>
+                                                        <td class="text-right"><strong>Rp
+                                                                5,700,000</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donor Churn Risk -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-warning">⚠️ Donor Berisiko
+                                            Berhenti</h6>
+                                    </div>
+                                    <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Hamba Allah 1</strong>
+                                                        <br><small class="text-muted">35 hari tidak
+                                                            donasi</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-danger">
+                                                            85% Risk
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Hamba Allah 2</strong>
+                                                        <br><small class="text-muted">45 hari tidak
+                                                            donasi</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-warning">
+                                                            60% Risk
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anomaly Alerts & Stunting Stats -->
+                        <div class="row">
+                            <!-- Expense Anomalies -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger">🚨 Anomali
+                                            Pengeluaran</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Operasional</strong>
+                                                        <br><small class="text-muted">2024-01</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-danger">
+                                                            SPIKE
+                                                        </span>
+                                                        <br><small>Rp 1,500,000</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stunting Statistics -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">📊 Statistik
+                                            Stunting (Pie Chart)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-pie" style="height: 300px;">
+                                            <canvas id="stuntingChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENT ENDED -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('theme-toggle');
+            const theme = localStorage.getItem('theme');
+
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggle.checked = false; // Inverted logic: Unchecked = Sun/Light, Checked = Moon/Dark
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggle.checked = true;
+            }
+
+            toggle.addEventListener('change', function () {
+                if (this.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+
+        // Mock Data for Static View
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'];
+
+        // --- Wave Chart (Multi-Wave) ---
+        var ctxDonasi = document.getElementById("donasiChart").getContext('2d');
+
+        // Gradients
+        let gradientPink = ctxDonasi.createLinearGradient(0, 0, 0, 300);
+        gradientPink.addColorStop(0, 'rgba(255, 117, 152, 0.2)');
+        gradientPink.addColorStop(1, 'rgba(255, 117, 152, 0.0)');
+
+        let gradientBlue = ctxDonasi.createLinearGradient(0, 0, 0, 300);
+        gradientBlue.addColorStop(0, 'rgba(0, 163, 255, 0.2)');
+        gradientBlue.addColorStop(1, 'rgba(0, 163, 255, 0.0)');
+
+        new Chart(ctxDonasi, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Donasi',
+                        data: [5000000, 7500000, 6000000, 9000000, 8500000, 10000000, 9500000, 11000000, 10500000, 12000000, 11500000, 13000000],
+                        borderColor: '#FF7598',
+                        backgroundColor: gradientPink,
+                        borderWidth: 3,
+                        tension: 0.5,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    },
+                    {
+                        label: 'Target',
+                        data: [4500000, 6000000, 5500000, 8000000, 7500000, 9000000, 8500000, 10000000, 9500000, 11000000, 10500000, 12000000],
+                        borderColor: '#00A3FF',
+                        backgroundColor: gradientBlue,
+                        borderWidth: 3,
+                        tension: 0.5,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top', align: 'end' },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#000',
+                        bodyColor: '#333',
+                        borderColor: '#f0f0f0',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { borderDash: [5, 5] }, ticks: { display: false } }
+                }
+            }
+        });
+
+        // --- Expense Chart (Vertical Bar) ---
+        var ctxExpense = document.getElementById("expenseChart").getContext('2d');
+        new Chart(ctxExpense, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pengeluaran',
+                    data: [2000000, 2500000, 2200000, 2800000, 3000000, 2500000, 3200000, 3100000, 3300000, 3500000, 3400000, 3600000],
+                    backgroundColor: labels.map((_, i) => i % 2 === 0 ? '#ffcf48' : '#e6e6e6'),
+                    borderRadius: 10,
+                    barThickness: 12
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

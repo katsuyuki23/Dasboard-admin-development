@@ -1,0 +1,254 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Anak;
+use App\Models\Kas;
+use App\Models\Donasi;
+use App\Models\Donatur;
+use App\Models\TransaksiKas;
+use App\Models\Pengurus;
+use Illuminate\Support\Facades\DB;
+
+class DashboardController extends Controller
+{
+    public function index(\Illuminate\Http\Request $request)
+    {
+        // Handle AJAX Request for Chart Data
+        if ($request->ajax()) {
+            $year = $request->input('year', date('Y'));
+
+            // 1. Donasi per Month (1-12)
+            $monthlyDonasi = Donasi::select(
+                DB::raw('SUM(jumlah) as total'),
+                DB::raw('MONTH(tanggal_catat) as bulan')
+            )
+            ->whereYear('tanggal_catat', $year)
+            ->groupBy(DB::raw('MONTH(tanggal_catat)'))
+            ->pluck('total', 'bulan')
+            ->toArray();
+
+            // 2. Pengeluaran per Month (1-12)
+            $monthlyPengeluaran = TransaksiKas::select(
+                DB::raw('SUM(nominal) as total'),
+                DB::raw('MONTH(tanggal) as bulan')
+            )
+            ->where('jenis_transaksi', 'KELUAR')
+            ->whereYear('tanggal', $year)
+            ->groupBy(DB::raw('MONTH(tanggal)'))
+            ->pluck('total', 'bulan')
+            ->toArray();
+
+            // Fill 0 for missing months
+            $finalDonasi = [];
+            $finalPengeluaran = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $finalDonasi[] = $monthlyDonasi[$i] ?? 0;
+                $finalPengeluaran[] = $monthlyPengeluaran[$i] ?? 0;
+            }
+
+            return response()->json([
+                'donasi' => $finalDonasi,
+                'pengeluaran' => $finalPengeluaran
+            ]);
+        }
+
+        // ==========================================
+        // Normal Page Load
+        // ==========================================
+        $totalAnak = Anak::whereNull('tanggal_keluar')->count();
+        $totalPengurus = Pengurus::count();
+        $totalSaldo = Kas::find(1)->saldo ?? 0;
+        $donasiBulanIni = Donasi::whereMonth('tanggal_catat', date('m'))
+                                ->whereYear('tanggal_catat', date('Y'))
+                                ->sum('jumlah');
+        $pengeluaranBulanIni = TransaksiKas::where('jenis_transaksi', 'KELUAR')
+                                ->whereMonth('tanggal', date('m'))
+                                ->whereYear('tanggal', date('Y'))
+                                ->sum('nominal');
+
+        // ==========================================
+        // TREND CALCULATIONS (Month-over-Month)
+        // ==========================================
+        
+        // Previous Month Data
+        $prevMonth = now()->subMonth();
+        
+        // Anak Asuh - Compare with last month's count
+        $anakBulanLalu = Anak::whereNull('tanggal_keluar')
+                            ->where('created_at', '<', now()->startOfMonth())
+                            ->count();
+        $anakChange = $anakBulanLalu > 0 ? (($totalAnak - $anakBulanLalu) / $anakBulanLalu) * 100 : 0;
+        
+        // Donasi - Compare with last month
+        $donasiBulanLalu = Donasi::whereMonth('tanggal_catat', $prevMonth->month)
+                                ->whereYear('tanggal_catat', $prevMonth->year)
+                                ->sum('jumlah');
+        $donasiChange = $donasiBulanLalu > 0 ? (($donasiBulanIni - $donasiBulanLalu) / $donasiBulanLalu) * 100 : 0;
+        
+        // Pengurus - Compare with last month's count
+        $pengurusBulanLalu = Pengurus::where('created_at', '<', now()->startOfMonth())->count();
+        $pengurusChange = $pengurusBulanLalu > 0 ? (($totalPengurus - $pengurusBulanLalu) / $pengurusBulanLalu) * 100 : 0;
+
+        // Initial Chart Data (Current Year)
+        // Re-use logic for consistency, or keep simple view variables
+        // Let's pass the same array structure for initial load to avoid JS duplication
+        $initialYear = date('Y');
+        
+        // Donasi Logic (Same as AJAX)
+        $mDonasi = Donasi::select(DB::raw('SUM(jumlah) as total'), DB::raw('MONTH(tanggal_catat) as bulan'))
+            ->whereYear('tanggal_catat', $initialYear)
+            ->groupBy(DB::raw('MONTH(tanggal_catat)'))
+            ->pluck('total', 'bulan')->toArray();
+        
+        // Pengeluaran Logic (Same as AJAX) - Grouped by Month for the Bar Chart
+        $mPengeluaran = TransaksiKas::select(DB::raw('SUM(nominal) as total'), DB::raw('MONTH(tanggal) as bulan'))
+            ->where('jenis_transaksi', 'KELUAR')
+            ->whereYear('tanggal', $initialYear)
+            ->groupBy(DB::raw('MONTH(tanggal)'))
+            ->pluck('total', 'bulan')->toArray();
+
+        $chartDonasi = [];
+        $chartPengeluaran = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $chartDonasi[] = $mDonasi[$i] ?? 0;
+            $chartPengeluaran[] = $mPengeluaran[$i] ?? 0;
+        }
+
+        // 4. Recent Transactions
+        $recentTransaksi = TransaksiKas::with(['kas', 'kategori'])->latest('tanggal')->limit(5)->get();
+
+        // ==========================================
+        // ANALYTICS FEATURES
+        // ==========================================
+
+        // A. Cash Flow Forecast (Simple Moving Average - 3 Months)
+        $last3MonthsDonasi = Donasi::where('tanggal_catat', '>=', now()->subMonths(3))->sum('jumlah');
+        $last3MonthsExpense = TransaksiKas::where('jenis_transaksi', 'KELUAR')
+                                ->where('tanggal', '>=', now()->subMonths(3))->sum('nominal');
+        
+        $avgIncome = $last3MonthsDonasi / 3;
+        $avgExpense = $last3MonthsExpense / 3;
+        
+        $forecast = [];
+        $currentSaldoForecast = $totalSaldo;
+        for ($i = 1; $i <= 3; $i++) {
+            $monthName = now()->addMonths($i)->format('F Y');
+            $currentSaldoForecast = $currentSaldoForecast + $avgIncome - $avgExpense;
+            $forecast[] = [
+                'bulan' => $monthName,
+                'masuk' => $avgIncome,
+                'keluar' => $avgExpense,
+                'saldo' => $currentSaldoForecast
+            ];
+        }
+
+        // B. Donor Churn Risk (Inactive > 30 Days)
+        $churnDonors = Donasi::join('donatur', 'donasi.id_donatur', '=', 'donatur.id_donatur')
+            ->select('donatur.nama', DB::raw('MAX(donasi.tanggal_catat) as last_donation'))
+            ->groupBy('donatur.id_donatur', 'donatur.nama')
+            ->having('last_donation', '<', now()->subDays(30))
+            ->orderBy('last_donation', 'asc')
+            ->limit(5)
+            ->get()
+            ->map(function($d) {
+                $daysInactive = \Carbon\Carbon::parse($d->last_donation)->diffInDays(now());
+                $risk = $daysInactive > 60 ? 'High' : ($daysInactive > 45 ? 'Medium' : 'Low');
+                return [
+                    'nama' => $d->nama,
+                    'days' => $daysInactive,
+                    'risk' => $risk
+                ];
+            });
+
+        // C. Expense Anomalies (Spike Detection)
+        $anomalies = [];
+        $categories = DB::table('kategori_transaksi')->get();
+        foreach($categories as $cat) {
+            $thisMonthConfig = TransaksiKas::where('id_kategori', $cat->id_kategori)
+                ->where('jenis_transaksi', 'KELUAR')
+                ->whereMonth('tanggal', date('m'))
+                ->whereYear('tanggal', date('Y'))
+                ->sum('nominal');
+            
+            $totalAllTime = TransaksiKas::where('id_kategori', $cat->id_kategori)
+                ->where('jenis_transaksi', 'KELUAR')->sum('nominal');
+            
+            $countMonths = max(1, TransaksiKas::where('id_kategori', $cat->id_kategori)
+                ->where('jenis_transaksi', 'KELUAR')
+                ->select(DB::raw('count(DISTINCT DATE_FORMAT(tanggal, "%Y-%m")) as c'))
+                ->value('c'));
+            
+            $monthlyAvg = $totalAllTime / $countMonths;
+
+            if ($thisMonthConfig > ($monthlyAvg * 1.5) && $thisMonthConfig > 50000) {
+                $anomalies[] = [
+                    'kategori' => $cat->nama_kategori,
+                    'amount' => $thisMonthConfig,
+                    'avg' => $monthlyAvg
+                ];
+            }
+        }
+
+        // ==========================================
+        // DONOR SEGMENTATION
+        // ==========================================
+        $totalDonors = Donatur::count();
+        
+        // Categorize by donation amount (High vs Low value donors)
+        $donorsByAmount = Donatur::withSum('donasi', 'jumlah')->get();
+        $avgDonation = $donorsByAmount->avg('donasi_sum_jumlah') ?: 0;
+        
+        $highValueDonors = $donorsByAmount->where('donasi_sum_jumlah', '>=', $avgDonation * 2)->count();
+        $lowValueDonors = $donorsByAmount->where('donasi_sum_jumlah', '<', $avgDonation * 2)
+                                        ->where('donasi_sum_jumlah', '>', 0)->count();
+        
+        // Categorize by frequency (using last 6 months for regular pattern)
+        $sixMonthsAgo = now()->subMonths(6);
+        $donorFrequency = Donatur::withCount(['donasi' => function($query) use ($sixMonthsAgo) {
+            $query->where('tanggal_catat', '>=', $sixMonthsAgo);
+        }])->get();
+        
+        $regularDonors = $donorFrequency->where('donasi_count', '>=', 3)->count(); // 3+ donations in 6 months
+        $oneTimeDonors = $donorFrequency->where('donasi_count', '=', 1)->count();
+        
+        // Category: Active donors (donated in last 3 months)
+        $threeMonthsAgo = now()->subMonths(3);
+        $activeDonors = Donatur::whereHas('donasi', function($query) use ($threeMonthsAgo) {
+            $query->where('tanggal_catat', '>=', $threeMonthsAgo);
+        })->count();
+        
+        $inactiveDonors = $totalDonors - $activeDonors;
+        
+        $donorSegmentation = [
+            'corporate' => [
+                'count' => $highValueDonors,
+                'percentage' => $totalDonors > 0 ? round(($highValueDonors / $totalDonors) * 100, 1) : 0,
+                'label' => 'High Value'
+            ],
+            'individual' => [
+                'count' => $activeDonors,
+                'percentage' => $totalDonors > 0 ? round(($activeDonors / $totalDonors) * 100, 1) : 0,
+                'label' => 'Active'
+            ],
+            'regular' => [
+                'count' => $regularDonors,
+                'percentage' => $totalDonors > 0 ? round(($regularDonors / $totalDonors) * 100, 1) : 0,
+                'label' => 'Regular'
+            ],
+            'oneTime' => [
+                'count' => $oneTimeDonors,
+                'percentage' => $totalDonors > 0 ? round(($oneTimeDonors / $totalDonors) * 100, 1) : 0,
+                'label' => 'One-Time'
+            ]
+        ];
+
+        return view('dashboard.index', compact(
+            'totalAnak', 'totalPengurus', 'totalSaldo', 'donasiBulanIni', 
+            'recentTransaksi', 'chartDonasi', 'chartPengeluaran',
+            'forecast', 'churnDonors', 'anomalies',
+            'anakChange', 'donasiChange', 'pengurusChange', 
+            'donorSegmentation', 'totalDonors'
+        ));
+    }
+}

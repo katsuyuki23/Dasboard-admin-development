@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Panti Asuhan Assholihin</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../public/css/custom.css">
+</head>
+
+<body>
+    <div class="d-flex"> <!-- Wrapper -->
+        <div class="sidebar d-flex flex-column flex-shrink-0">
+            <div class="brand-section">
+                <img src="../../public/assets/images/logo_yayasan.png" alt="Logo" class="sidebar-logo">
+                <div class="brand-text">YAYASAN</div>
+                <div class="brand-text">ASSHOLIHIN</div>
+                <div class="brand-subtext">Panti Asuhan</div>
+            </div>
+
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link active">
+                        <i class="fas fa-home"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-pie"></i> <span>Analytics</span>
+                    </a>
+                </li>
+
+                <li class="nav-header">Data Utama</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-child"></i> <span>Data Anak Asuh</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-user-tie"></i> <span>Data Pengurus</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-images"></i> <span>Gallery Kegiatan</span>
+                    </a>
+                </li>
+
+                <li class="nav-header">Keuangan</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-hand-holding-heart"></i> <span>Donasi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+                    </a>
+                </li>
+
+                <!-- Check Auth Deleted -->
+                <li class="nav-header">Data Master</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i> <span>Donatur</span>
+                    </a>
+                </li>
+
+                <li class="nav-header">Laporan</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-invoice"></i> <span>Laporan Keuangan</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- User Menu moved to Topbar -->
+        </div>
+
+        <!-- Main Content Wrapper -->
+        <div class="d-flex flex-column flex-grow-1" style="height: 100vh; overflow: hidden;">
+
+            <!-- Topbar -->
+            <nav class="navbar topbar px-4 py-3 d-flex justify-content-between align-items-center border-bottom">
+
+                <div class="d-flex align-items-center">
+                    <!-- Mobile Toggle -->
+                    <button class="btn btn-outline-secondary d-lg-none me-3 border-0 bg-transparent" id="sidebarToggle">
+                        <i class="fas fa-bars fa-lg text-muted"></i>
+                    </button>
+
+                    <!-- Search -->
+                    <div class="search-wrapper d-flex align-items-center rounded-pill px-3 py-2" style="width: 300px;">
+                        <i class="fas fa-search text-muted me-2"></i>
+                        <input type="text" class="form-control border-0 bg-transparent p-0"
+                            placeholder="Search for anything...">
+                    </div>
+                </div>
+
+                <!-- Right Nav -->
+                <div class="d-flex align-items-center gap-4">
+                    <!-- Theme Switch -->
+                    <div class="theme-switch-wrapper">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider">
+                                <div class="star star_1"></div>
+                                <div class="star star_2"></div>
+                                <div class="star star_3"></div>
+                                <svg viewBox="0 0 16 16" class="cloud_1 cloud">
+                                    <path transform="matrix(.77976 0 0 .78395-299.99-418.63)" fill="#fff"
+                                        d="m391.84 540.91c-.421-.329-.949-.524-1.523-.524-1.351 0-2.451 1.084-2.485 2.435-1.395.526-2.388 1.88-2.388 3.466 0 1.874 1.385 3.423 3.182 3.667v.034h12.73v-.006c1.775-.104 3.182-1.584 3.182-3.395 0-1.747-1.309-3.186-2.994-3.379.007-.106.011-.214.011-.322 0-2.707-2.271-4.901-5.072-4.901-2.073 0-3.856 1.202-4.643 2.925">
+                                    </path>
+                                </svg>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="position-relative cursor-pointer">
+                        <i class="fas fa-bell fa-lg text-muted"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.5rem; padding: 3px 5px;">
+                            3
+                        </span>
+                    </div>
+
+                    <!-- User Dropdown (Moved from Sidebar) -->
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle no-arrow"
+                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=0E4D2B&color=fff" alt=""
+                                class="user-avatar shadow-sm border border-2 border-white">
+                            <div class="ms-2 d-none d-sm-block text-start">
+                                <div class="fw-bold text-dark small mb-0">Admin User</div>
+                                <small class="text-muted" style="font-size: 0.7rem;">ADMIN
+                                </small>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2"
+                            aria-labelledby="dropdownUser1" style="border-radius: 12px; overflow: hidden;">
+                            <li><a class="dropdown-item py-2 small" href="#"><i
+                                        class="fas fa-user me-2 text-primary"></i> Profil</a></li>
+                            <li><a class="dropdown-item py-2 small" href="#"><i
+                                        class="fas fa-key me-2 text-warning"></i> Ganti Password</a></li>
+                            <li>
+                                <hr class="dropdown-divider my-1">
+                            </li>
+                            <li>
+                                <form action="#" method="POST">
+
+                                    <button type="submit" class="dropdown-item py-2 text-danger small"><i
+                                            class="fas fa-sign-out-alt me-2"></i> Keluar</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Scrollable Page Content -->
+            <div class="flex-grow-1 overflow-auto">
+                <div class="content-wrapper container-fluid p-4">
+
+                    <!-- Flash Messages removed -->
+
+                    <div class="container-fluid">
+                        <!-- Header removed (replaced by Banner) -->
+
+                        <!-- Welcome/Header Banner -->
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <div class="card border-0 text-white overflow-hidden shadow-lg"
+                                    style="border-radius: 25px; background: linear-gradient(135deg, rgba(14, 77, 43, 0.9), rgba(10, 61, 32, 0.95)), url('../../public/assets/images/bg_pattern.jpg'); background-size: cover; background-position: center;">
+                                    <div class="card-body p-5 position-relative">
+                                        <div class="position-relative z-index-1">
+                                            <h1 class="display-5 fw-bold mb-2">
+                                                <i class="fas fa-chart-line me-3"></i>Analytics Overview
+                                            </h1>
+                                            <p class="lead opacity-75 mb-0" style="max-width: 600px;">
+                                                Analisis mendalam data donasi, pengeluaran, dan perkembangan anak asuh.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Key Metrics Row -->
+                        <div class="row mb-4">
+                            <!-- Predicted Donation -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Prediksi Donasi</div>
+                                                <div class="h5 mb-0 font-weight-bold text-dark">Rp 28.500.000</div>
+                                                <div class="h5 mb-0 font-weight-bold text-dark">
+                                                    Rp 25.500.000 (Target)</div>
+                                                <small class="text-success font-weight-bold">Confidence: 85%</small>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="stat-icon-wrapper bg-light-primary">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donor at Risk -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Donor Berisiko</div>
+                                                <div class="h5 mb-0 font-weight-bold text-dark">
+                                                    15 Donor
+                                                </div>
+                                                <small class="text-muted">Perlu follow-up</small>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="stat-icon-wrapper bg-light-warning">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anomaly Alerts -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                    Anomali Pengeluaran</div>
+                                                <div class="h5 mb-0 font-weight-bold text-dark">
+                                                    3 Alert
+                                                </div>
+                                                <small class="text-muted">Deteksi otomatis</small>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="stat-icon-wrapper bg-light-danger"
+                                                    style="background: rgba(231, 74, 59, 0.1); color: #e74a3b;">
+                                                    <i class="fas fa-bell"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donor Segments -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Donor Champions</div>
+                                                <div class="h5 mb-0 font-weight-bold text-dark">
+                                                    120 Donor
+                                                </div>
+                                                <small class="text-muted">Top contributors</small>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="stat-icon-wrapper bg-light-success">
+                                                    <i class="fas fa-trophy"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Row -->
+                        <div class="row mb-4">
+                            <!-- Donation Trends -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card border-0 shadow-sm h-100" style="border-radius: 20px;">
+                                    <div
+                                        class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                                        <h6 class="m-0 fw-bold text-dark">Tren Donasi</h6>
+                                        <select id="donationTrendFilter" class="form-select form-select-sm"
+                                            style="width: 160px; border-radius: 8px;">
+                                            <option value="30">30 Hari Terakhir</option>
+                                            <option value="90">90 Hari Terakhir</option>
+                                            <option value="180">6 Bulan Terakhir</option>
+                                            <option value="365" selected>1 Tahun Terakhir</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="height: 300px;">
+                                            <canvas id="donationTrendChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donor Segmentation -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card border-0 shadow-sm h-100" style="border-radius: 20px;">
+                                    <div
+                                        class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                                        <h6 class="m-0 fw-bold text-dark">Segmentasi Donor</h6>
+                                        <select id="donorSegmentFilter" class="form-select form-select-sm"
+                                            style="width: 160px; border-radius: 8px;">
+                                            <option value="30">30 Hari Terakhir</option>
+                                            <option value="90">90 Hari Terakhir</option>
+                                            <option value="180">6 Bulan Terakhir</option>
+                                            <option value="365" selected>1 Tahun Terakhir</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="height: 300px;">
+                                            <canvas id="donorSegmentChart"></canvas>
+                                        </div>
+                                        <div class="mt-3 text-center small">
+                                            <span class="me-3"><i class="fas fa-circle text-primary"></i> High
+                                                Value</span>
+                                            <span class="me-3"><i class="fas fa-circle text-success"></i> Active</span>
+                                            <span class="me-3"><i class="fas fa-circle text-warning"></i> Regular</span>
+                                            <span><i class="fas fa-circle text-info"></i> One-Time</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cash Flow Forecast & Churn Analysis -->
+                        <div class="row">
+                            <!-- Cash Flow Forecast -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><i
+                                                class="fas fa-coins me-2"></i>Prediksi Cash Flow (3 Bulan)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bulan</th>
+                                                        <th class="text-right">Prediksi Masuk</th>
+                                                        <th class="text-right">Prediksi Keluar</th>
+                                                        <th class="text-right">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Januari</strong></td>
+                                                        <td class="text-right text-success">Rp 25.500.000</td>
+                                                        <td class="text-right text-danger">Rp 15.000.000</td>
+                                                        <td class="text-right"><strong>Rp 10.500.000</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Februari</strong></td>
+                                                        <td class="text-right text-success">Rp 28.000.000</td>
+                                                        <td class="text-right text-danger">Rp 16.500.000</td>
+                                                        <td class="text-right"><strong>Rp 11.500.000</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Maret</strong></td>
+                                                        <td class="text-right text-success">Rp 30.200.000</td>
+                                                        <td class="text-right text-danger">Rp 18.000.000</td>
+                                                        <td class="text-right"><strong>Rp 12.200.000</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donor Churn Risk -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-warning"><i
+                                                class="fas fa-exclamation-triangle me-2"></i>Donor Berisiko Berhenti
+                                        </h6>
+                                    </div>
+                                    <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Budi Santoso</strong>
+                                                        <br><small class="text-muted">45 hari tidak donasi</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-danger text-danger bg-danger-subtle">
+                                                            High Risk
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Siti Aminah</strong>
+                                                        <br><small class="text-muted">35 hari tidak donasi</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span
+                                                            class="badge badge-warning text-warning bg-warning-subtle">
+                                                            Medium Risk
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anomaly Alerts & Stunting Stats -->
+                        <div class="row">
+                            <!-- Expense Anomalies -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger"><i
+                                                class="fas fa-bell me-2"></i>Anomali Pengeluaran</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="list-group list-group-flush">
+
+                                            <div class="list-group-item px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <strong>Sembako / Pangan</strong>
+                                                        <br><small class="text-muted">Januari 2025</small>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-danger text-danger bg-danger-subtle">
+                                                            High Severity
+                                                        </span>
+                                                        <br><small>Rp 5.500.000</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stunting Statistics -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><i
+                                                class="fas fa-chart-pie me-2"></i>Statistik Stunting (Pie Chart)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-pie" style="height: 300px;">
+                                            <canvas id="stuntingChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        // Expense Category Icons
+                        const categoryIcons = {
+                            'PERMAKANAN': 'fa-utensils',
+                            'OPERASIONAL': 'fa-cog',
+                            'PENDIDIKAN': 'fa-graduation-cap',
+                            'SARANA_PRASARANA': 'fa-building'
+                        };
+
+
+                        // Donation Trend Chart - Modern Area Chart with Smooth Curves
+                        var ctx = document.getElementById("donationTrendChart");
+                        const gradient1 = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
+                        gradient1.addColorStop(0, 'rgba(75, 192, 192, 0.4)');
+                        gradient1.addColorStop(1, 'rgba(75, 192, 192, 0.01)');
+
+                        const gradient2 = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
+                        gradient2.addColorStop(0, 'rgba(78, 115, 223, 0.4)');
+                        gradient2.addColorStop(1, 'rgba(78, 115, 223, 0.01)');
+
+                        var donationChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ["Jan '25", "Feb '25", "Mar '25", "Apr '25", "May '25", "Jun '25", "Jul '25", "Aug '25", "Sep '25", "Oct '25", "Nov '25", "Dec '25"],
+                                datasets: [
+                                    {
+                                        label: "Target",
+                                        data: [15500000, 18200000, 14800000, 21500000, 19300000, 22100000, 17900000, 20500000, 23400000, 19800000, 25300000, 27800000],
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        backgroundColor: gradient1,
+                                        fill: true,
+                                        tension: 0.4,
+                                        borderWidth: 2,
+                                        pointRadius: 0,
+                                        pointHoverRadius: 6,
+                                        pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+                                    },
+                                    {
+                                        label: "Aktual",
+                                        data: [15500000, 18200000, 14800000, 21500000, 19300000, 22100000, 17900000, 20500000, 23400000, 19800000, 25300000, 27800000],
+                                        borderColor: 'rgba(78, 115, 223, 1)',
+                                        backgroundColor: gradient2,
+                                        fill: true,
+                                        tension: 0.4,
+                                        borderWidth: 2,
+                                        pointRadius: 0,
+                                        pointHoverRadius: 6,
+                                        pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+                                    }
+                                ],
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                responsive: true,
+                                interaction: {
+                                    mode: 'index',
+                                    intersect: false,
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                return context.dataset.label + ': Rp ' + context.parsed.y.toLocaleString('id-ID');
+                                            }
+                                        },
+                                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                        padding: 12,
+                                        cornerRadius: 8
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        grid: {
+                                            display: false
+                                        },
+                                        ticks: {
+                                            color: '#858796'
+                                        }
+                                    },
+                                    y: {
+                                        grid: {
+                                            color: 'rgba(0, 0, 0, 0.05)',
+                                            borderDash: [5, 5]
+                                        },
+                                        ticks: {
+                                            callback: function (value) {
+                                                if (value >= 1000000) {
+                                                    return 'Rp ' + (value / 1000000).toFixed(1) + 'jt';
+                                                }
+                                                return 'Rp ' + (value / 1000).toFixed(0) + 'k';
+                                            },
+                                            color: '#858796'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        // Donor Segmentation Chart - Custom Bar Chart
+                        var ctxSegment = document.getElementById("donorSegmentChart");
+                        // Dummy data for static demo
+                        var segments = { champions: 120, loyal: 80, at_risk: 15, new: 45, one_time: 200 };
+
+                        var segmentChart = new Chart(ctxSegment, {
+                            type: 'bar',
+                            data: {
+                                labels: ['High Value', 'Active', 'Regular', 'One-Time', 'Inactive'],
+                                datasets: [{
+                                    label: 'Jumlah Donor',
+                                    data: [
+                                        segments.champions || 0,
+                                        segments.loyal || 0,
+                                        segments.at_risk || 0,
+                                        segments.new || 0,
+                                        segments.one_time || 0
+                                    ],
+                                    backgroundColor: [
+                                        '#4e73df',
+                                        '#1cc88a',
+                                        '#f6c23e',
+                                        '#36b9cc',
+                                        '#e74a3b'
+                                    ],
+                                    borderRadius: 8,
+                                    barPercentage: 0.6
+                                }],
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                return context.parsed.y + ' Donor';
+                                            }
+                                        },
+                                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                        padding: 12,
+                                        cornerRadius: 8
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        grid: {
+                                            display: false
+                                        },
+                                        ticks: {
+                                            color: '#858796',
+                                            font: {
+                                                size: 11
+                                            }
+                                        }
+                                    },
+                                    y: {
+                                        beginAtZero: true,
+                                        grid: {
+                                            color: 'rgba(0, 0, 0, 0.05)',
+                                            borderDash: [5, 5]
+                                        },
+                                        ticks: {
+                                            color: '#858796',
+                                            stepSize: 1
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+
+                    <script>
+                        // Stunting Chart
+                        var ctxStunting = document.getElementById("stuntingChart");
+
+                        // Sample Data: Stunting Status
+                        var stuntingLabels = ["Normal", "Pendek (Stunted)", "Sangat Pendek (Severely Stunted)"];
+                        var stuntingCounts = [28, 10, 4];
+                        var stuntingColors = ["#1cc88a", "#f6c23e", "#e74a3b"];
+
+                        new Chart(ctxStunting, {
+                            type: 'pie',
+                            data: {
+                                labels: stuntingLabels,
+                                datasets: [{
+                                    data: stuntingCounts,
+                                    backgroundColor: stuntingColors,
+                                    hoverBackgroundColor: stuntingColors,
+                                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                }],
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                },
+                                cutout: '0%', // Pie chart (full)
+                            },
+                        });
+                    </script>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-overlay"></div> <!-- Overlay for mobile -->
+
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // Sidebar Toggle Logic
+            document.addEventListener('DOMContentLoaded', function () {
+                const sidebar = document.querySelector('.sidebar');
+                const toggleBtn = document.getElementById('sidebarToggle');
+                const overlay = document.querySelector('.sidebar-overlay');
+
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', function () {
+                        sidebar.classList.toggle('active');
+                        overlay.classList.toggle('show');
+                    });
+
+                    overlay.addEventListener('click', function () {
+                        sidebar.classList.remove('active');
+                        overlay.classList.remove('show');
+                    });
+                }
+
+                // Dark Mode Logic (existing)
+                const themeToggle = document.getElementById('theme-toggle');
+                const body = document.body;
+
+                // Check Local Storage
+                if (localStorage.getItem('theme') === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                }
+
+                themeToggle.addEventListener('change', function () {
+                    if (this.checked) {
+                        body.classList.add('dark-mode');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        body.classList.remove('dark-mode');
+                        localStorage.setItem('theme', 'light');
+                    }
+                });
+            });
+        </script>
+
+
+</body>
+
+</html>

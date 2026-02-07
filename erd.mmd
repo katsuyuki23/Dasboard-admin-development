@@ -1,0 +1,181 @@
+erDiagram
+    %% Core Entities
+    USERS ||--o{ DONATUR : "has profile"
+    USERS ||--o{ ACTIVITY_LOG : "performs"
+    
+    ANAK ||--o{ RIWAYAT_KESEHATAN : "has"
+    ANAK ||--o{ RIWAYAT_PENDIDIKAN : "has"
+    ANAK ||--o{ DOKUMEN_ANAK : "has"
+    ANAK ||--o{ FOTO_KEGIATAN : "tagged in"
+    ANAK ||--o{ GROWTH_MONITORING : "monitored in"
+    
+    DONATUR ||--o{ DONASI : "makes"
+    DONASI ||--|| TRANSAKSI_KAS : "creates"
+    
+    KAS ||--o{ TRANSAKSI_KAS : "contains"
+    KATEGORI_TRANSAKSI ||--o{ TRANSAKSI_KAS : "categorizes"
+    
+    %% User Entity
+    USERS {
+        bigint id_user PK
+        string name
+        string email UK
+        string password
+        string role
+        timestamp email_verified_at
+        timestamp created_at
+    }
+    
+    %% Anak (Children) Module
+    ANAK {
+        bigint id_anak PK
+        string nomor_induk UK
+        string nik
+        string nisn
+        string nama
+        string tempat_lahir
+        date tanggal_lahir
+        enum jenis_kelamin
+        enum status_anak
+        string nama_ayah
+        string nama_ibu
+        string nama_wali
+        string hubungan_wali
+        string no_hp_wali
+        string no_hp_keluarga
+        text alamat_wali
+        text alamat_asal
+        text alasan_masuk
+        date tanggal_masuk
+        date tanggal_keluar
+        string foto
+    }
+    
+    RIWAYAT_KESEHATAN {
+        bigint id_kesehatan PK
+        bigint id_anak FK
+        date tanggal_periksa
+        string keluhan
+        string diagnosa
+        string tindakan
+        string keterangan
+    }
+    
+    RIWAYAT_PENDIDIKAN {
+        bigint id_pendidikan PK
+        bigint id_anak FK
+        string jenjang
+        string nama_sekolah
+        string tahun_ajaran
+        string kelas
+        string prestasi
+        string keterangan
+    }
+    
+    DOKUMEN_ANAK {
+        bigint id_dokumen PK
+        bigint id_anak FK
+        string jenis_dokumen
+        string nama_file
+        string path_file
+        timestamp uploaded_at
+    }
+    
+    FOTO_KEGIATAN {
+        bigint id_foto PK
+        bigint id_anak FK
+        string judul
+        text deskripsi
+        string path_foto
+        date tanggal_kegiatan
+    }
+    
+    GROWTH_MONITORING {
+        bigint id_monitoring PK
+        bigint id_anak FK
+        date tanggal_ukur
+        int usia_bulan
+        decimal berat_badan
+        decimal tinggi_badan
+        decimal lingkar_kepala
+        decimal z_score_berat
+        decimal z_score_tinggi
+        string status_gizi
+        text rekomendasi_ai
+        text catatan
+    }
+    
+    %% Donation Module
+    DONATUR {
+        bigint id_donatur PK
+        bigint user_id FK
+        string nama
+        text alamat
+    }
+    
+    DONASI {
+        bigint id_donasi PK
+        enum type_donasi
+        bigint id_donatur FK
+        string sumber_non_donatur
+        int bulan
+        int tahun
+        decimal jumlah
+        date tanggal_catat
+    }
+    
+    %% Financial Module
+    KAS {
+        bigint id_kas PK
+        decimal saldo_awal
+        decimal total_masuk
+        decimal total_keluar
+        decimal saldo_akhir
+        date tanggal_update
+    }
+    
+    KATEGORI_TRANSAKSI {
+        bigint id_kategori PK
+        string nama_kategori
+        enum jenis
+        text deskripsi
+    }
+    
+    TRANSAKSI_KAS {
+        bigint id_transaksi PK
+        bigint id_kas FK
+        bigint id_kategori FK
+        bigint id_donasi FK
+        enum jenis_transaksi
+        decimal nominal
+        date tanggal
+        text keterangan
+    }
+    
+    %% Staff Module
+    PENGURUS {
+        bigint id_pengurus PK
+        string nik UK
+        string nama
+        enum jenis_kelamin
+        string tempat_lahir
+        date tanggal_lahir
+        date mulai_bekerja
+        string jabatan
+        string status_kepegawaian
+        string pendidikan_terakhir
+        text pelatihan
+    }
+    
+    %% Activity Log
+    ACTIVITY_LOG {
+        bigint id_log PK
+        bigint user_id FK
+        string action
+        string model
+        bigint model_id
+        text description
+        json old_values
+        json new_values
+        timestamp created_at
+    }

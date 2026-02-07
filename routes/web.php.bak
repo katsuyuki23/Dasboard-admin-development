@@ -1,0 +1,115 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnakController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\LaporanController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+    return redirect('/admin/login');
+});
+
+// Auth Routes
+Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/admin/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Protected Routes
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Modules
+    // We will add resource controllers here as we build them
+    
+    // Anak (Data Anak, Kesehatan, Pendidikan)
+    Route::get('/anak/export/excel', [\App\Http\Controllers\AnakController::class, 'exportExcel'])->name('anak.export.excel');
+    Route::get('/anak/export/pdf', [\App\Http\Controllers\AnakController::class, 'exportPdf'])->name('anak.export.pdf');
+    Route::resource('anak', AnakController::class);
+    
+    // Growth Monitoring
+    Route::get('anak/{anak}/growth/create', [\App\Http\Controllers\GrowthMonitoringController::class, 'create'])->name('growth.create');
+    Route::post('anak/{anak}/growth', [\App\Http\Controllers\GrowthMonitoringController::class, 'store'])->name('growth.store');
+
+    // Pengurus Panti
+    Route::resource('pengurus', \App\Http\Controllers\PengurusController::class);
+
+    // Dokumen Anak
+    Route::post('/anak/{id}/dokumen', [\App\Http\Controllers\AnakController::class, 'uploadDokumen'])->name('anak.dokumen.upload');
+    Route::delete('/dokumen/{id}', [\App\Http\Controllers\AnakController::class, 'deleteDokumen'])->name('dokumen.delete');
+
+    // Gallery Foto Kegiatan
+    Route::resource('gallery', \App\Http\Controllers\GalleryController::class)->except(['show', 'edit', 'update']);
+    
+    // Profile & Change Password
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/change-password', [\App\Http\Controllers\ProfileController::class, 'changePasswordForm'])->name('profile.change-password');
+    Route::post('/profile/change-password', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile.change-password.update');
+    
+    // Riwayat (Inline)
+    Route::post('/riwayat-kesehatan', [RiwayatController::class, 'storeKesehatan'])->name('riwayat-kesehatan.store');
+    Route::delete('/riwayat-kesehatan/{id}', [RiwayatController::class, 'destroyKesehatan'])->name('riwayat-kesehatan.destroy');
+    Route::post('/riwayat-pendidikan', [RiwayatController::class, 'storePendidikan'])->name('riwayat-pendidikan.store');
+    Route::delete('/riwayat-pendidikan/{id}', [RiwayatController::class, 'destroyPendidikan'])->name('riwayat-pendidikan.destroy');
+    
+    // Keuangan (Donatur)
+    Route::resource('donatur', \App\Http\Controllers\DonaturController::class);
+    
+    // Donasi
+    Route::resource('donasi', DonasiController::class);
+
+    // Transaksi
+    Route::get('/pengeluaran', [\App\Http\Controllers\TransaksiKasController::class, 'indexPengeluaran'])->name('pengeluaran.index');
+    Route::get('/pengeluaran/create', [\App\Http\Controllers\TransaksiKasController::class, 'createPengeluaran'])->name('pengeluaran.create');
+    Route::get('/pengeluaran/{id}/edit', [\App\Http\Controllers\TransaksiKasController::class, 'editPengeluaran'])->name('pengeluaran.edit');
+    Route::resource('transaksi', \App\Http\Controllers\TransaksiKasController::class);
+
+    // Laporan
+    Route::get('/laporan', [\App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan/export', [\App\Http\Controllers\LaporanController::class, 'export'])->name('laporan.export');
+    Route::post('/laporan/rekap', [\App\Http\Controllers\LaporanController::class, 'exportRekap'])->name('laporan.rekap');
+
+    // Big Data Analytics
+    Route::get('/analytics', [\App\Http\Controllers\AnalyticsController::class, 'dashboard'])->name('analytics.dashboard');
+    Route::get('/api/analytics', [\App\Http\Controllers\AnalyticsController::class, 'api'])->name('analytics.api');
+    
+    // Prediction & ML APIs
+    Route::prefix('api/predictions')->group(function() {
+        Route::get('/donations', [\App\Http\Controllers\PredictionController::class, 'donationForecast']);
+        Route::get('/cashflow', [\App\Http\Controllers\PredictionController::class, 'cashFlowForecast']);
+        Route::get('/churn', [\App\Http\Controllers\PredictionController::class, 'churnAnalysis']);
+        Route::get('/segments', [\App\Http\Controllers\PredictionController::class, 'donorSegmentation']);
+        Route::get('/anomalies', [\App\Http\Controllers\PredictionController::class, 'expenseAnomalies']);
+        Route::get('/donor/{id}/ltv', [\App\Http\Controllers\PredictionController::class, 'donorLTV']);
+    });
+});
+
+// Helper Routes for testing
+Route::get('/test-etl', function() {
+    \Illuminate\Support\Facades\Artisan::call('duckdb:extract');
+    return "ETL Triggered";
+});
+
+Route::get('/test-wa', function() {
+    try {
+        $service = new \App\Services\WhatsAppNotificationService();
+        $result = $service->notifyAdmin("🔔 Tes Notifikasi dari Laravel! Sistem berfungsi normal.");
+        return $result ? "Berhasil kirim ke Admin!" : "Gagal kirim. Cek Log.";
+    } catch (\Throwable $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
+// WhatsApp Webhook (Exempt from CSRF in VerifyCsrfToken middleware)
+Route::post('/webhook/whatsapp', [\App\Http\Controllers\WhatsAppWebhookController::class, 'handle'])->name('webhook.whatsapp');
