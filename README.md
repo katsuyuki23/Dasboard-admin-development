@@ -351,7 +351,7 @@ This project is licensed under the MIT License.
 
 Untuk pertanyaan atau dukungan teknis:
 - **Email**: [katsuyukilah@gmail.com]
-- **GitHub Issues**: [Repository URL]/issues
+- **GitHub Issues**: [https://github.com/katsuyuki23/Dasboard-admin-development]/issues
 
 ---
 
