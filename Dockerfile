@@ -41,8 +41,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN a2enmod rewrite
 
 # Fix: Ensure only one MPM is loaded (prefork is required for mod_php)
-# Conflicting MPMs (event/worker) might be enabled by package updates
-RUN a2dismod mpm_event mpm_worker || true
+# Aggressively remove all MPM configs first to prevent "More than one MPM loaded" error
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf /etc/apache2/mods-enabled/mpm_*.load
 RUN a2enmod mpm_prefork
 
 # Update Apache config to point to public directory
