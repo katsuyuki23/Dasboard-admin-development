@@ -40,6 +40,11 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Fix: Ensure only one MPM is loaded (prefork is required for mod_php)
+# Conflicting MPMs (event/worker) might be enabled by package updates
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork
+
 # Update Apache config to point to public directory
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
