@@ -101,7 +101,7 @@ Sistem Informasi Panti Asuhan Assholihin adalah aplikasi web yang dirancang untu
 - `dokumen_anak` - Dokumen digital anak
 - `foto_kegiatan` - Gallery foto
 
-> **Lihat ERD lengkap**: [erd.md](erd.md)
+> **Lihat detail struktur database di bawah.**
 
 ---
 
@@ -195,49 +195,13 @@ caps3/
 │       └── gallery/          # Foto kegiatan
 ├── .env                      # Environment config
 ├── composer.json             # PHP dependencies
-├── erd.md                    # ERD & Diagrams
-├── DOKUMENTASI_TEKNIS.md     # Technical documentation
-├── PANDUAN_PRESENTASI.md     # Presentation guide
-├── PENJELASAN_FITUR.md       # Feature explanation
 └── README.md                 # This file
 ```
 
 ---
 
 ## 📚 DOKUMENTASI
-
-Untuk persiapan sidang, tersedia dokumentasi lengkap:
-
-1. **[DOKUMENTASI_TEKNIS.md](DOKUMENTASI_TEKNIS.md)**
-   - Latar belakang dan permasalahan
-   - Spesifikasi teknis lengkap
-   - Arsitektur sistem 5 layer
-   - Database design & ERD
-   - Fitur-fitur detail
-   - Instalasi & deployment
-   - Testing & validasi
-
-2. **[PANDUAN_PRESENTASI.md](PANDUAN_PRESENTASI.md)**
-   - Struktur presentasi (20-30 menit)
-   - Outline slide per slide
-   - Flow demo aplikasi
-   - Tips presentasi
-   - Antisipasi pertanyaan penguji
-   - Checklist hari H
-
-3. **[PENJELASAN_FITUR.md](PENJELASAN_FITUR.md)**
-   - Penjelasan detail setiap fitur
-   - Screenshot checklist
-   - Cara penggunaan setiap modul
-   - Validasi dan error handling
-
-4. **[erd.md](erd.md)**
-   - Entity Relationship Diagram (ERD)
-   - System Architecture Diagram
-   - Use Case Diagram
-   - Sequence Diagrams (11 diagrams)
-
----
+Dokumentasi lengkap mengenai teknis, presentasi, dan fitur telah diringkas dalam file ini.
 
 ## 🎯 ARSITEKTUR SISTEM
 
