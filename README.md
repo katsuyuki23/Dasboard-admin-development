@@ -350,7 +350,7 @@ This project is licensed under the MIT License.
 ## 📞 SUPPORT
 
 Untuk pertanyaan atau dukungan teknis:
-- **Email**: [Email Anda]
+- **Email**: [katsuyukilah@gmail.com]
 - **GitHub Issues**: [Repository URL]/issues
 
 ---
