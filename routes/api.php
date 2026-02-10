@@ -25,9 +25,25 @@ Route::prefix('landing')->group(function () {
 });
 
 Route::get('/test-db', function() {
-    return response()->json([
-        'status' => 'API WORKS',
-        'time' => now()->toDateTimeString(),
-        'message' => 'DB Logic Temporarily Removed'
-    ]);
+    try {
+        $pdo = \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
+        $count = \Illuminate\Support\Facades\DB::table('transaksi_kas')->count();
+        $sum = \Illuminate\Support\Facades\DB::table('transaksi_kas')->where('jenis_transaksi', 'MASUK')->whereYear('tanggal', 2026)->sum('nominal');
+        
+        return response()->json([
+            'status' => 'DB Connected',
+            'database' => $dbName,
+            'host' => config('database.connections.mysql.host'),
+            'transaksi_count' => $count,
+            'sum_2026' => $sum,
+            'server_time' => now()->toDateTimeString(),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'DB Error',
+            'error' => $e->getMessage(), 
+            'config' => config('database.connections.mysql.host') // Show host to verify
+        ], 500);
+    }
 });
