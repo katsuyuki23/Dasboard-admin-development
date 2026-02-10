@@ -20,5 +20,18 @@ foreach ($storageDirs as $dir) {
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SCRIPT_FILENAME'] = __DIR__ . '/../public/index.php';
 
+// [NEW] Debug Block
+if (isset($_GET['vercel_debug'])) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'status' => 'ok',
+        'message' => 'Vercel Entry Point Reachable',
+        'uri' => $_SERVER['REQUEST_URI'],
+        'script' => $_SERVER['SCRIPT_NAME'],
+        'method' => $_SERVER['REQUEST_METHOD']
+    ]);
+    exit;
+}
+
 require __DIR__ . '/../public/index.php';
 
