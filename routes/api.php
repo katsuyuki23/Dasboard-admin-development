@@ -23,3 +23,22 @@ Route::prefix('landing')->group(function () {
         Route::get('/status/{orderId}', [DokuController::class, 'checkStatus']);
     });
 });
+
+Route::get('/test-db', function() {
+    try {
+        $pdo = \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
+        $count = \Illuminate\Support\Facades\DB::table('transaksi_kas')->count();
+        $sum = \Illuminate\Support\Facades\DB::table('transaksi_kas')->where('jenis_transaksi', 'MASUK')->whereYear('tanggal', 2026)->sum('nominal');
+        
+        return response()->json([
+            'status' => 'Connected via API',
+            'database' => $dbName,
+            'host' => config('database.connections.mysql.host'),
+            'transaksi_count' => $count,
+            'server_time' => now()->toDateTimeString(),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
