@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Pagination\Paginator::useBootstrapFive();
 
-        if (str_contains(request()->header('Host'), 'ngrok')) {
+        if ($this->app->environment('production') || str_contains(request()->header('Host'), 'ngrok') || env('VERCEL')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
