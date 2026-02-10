@@ -159,3 +159,26 @@ Route::get('/test-tripay-simulation', function() {
 
     return "Simulasi dikirim untuk Donasi ID: $donasi->id_donasi. <br>Ref: $merchantRef <br>Status: " . $response->status() . " <br>Body: " . $response->body();
 });
+
+Route::get('/test-db', function() {
+    try {
+        $pdo = \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
+        $count = \Illuminate\Support\Facades\DB::table('transaksi_kas')->count();
+        $sum = \Illuminate\Support\Facades\DB::table('transaksi_kas')->where('jenis_transaksi', 'MASUK')->whereYear('tanggal', 2026)->sum('nominal');
+        $kas = \Illuminate\Support\Facades\DB::table('kas')->first();
+        
+        return response()->json([
+            'status' => 'Connected',
+            'database' => $dbName,
+            'config_host' => config('database.connections.mysql.host'),
+            'transaksi_count' => $count,
+            'sum_masuk_2026' => $sum,
+            'kas_first' => $kas,
+            'server_time' => now()->toDateTimeString(),
+            'php_version' => phpversion()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()], 500);
+    }
+});
