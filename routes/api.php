@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LandingController;
 use App\Http\Controllers\Api\DokuController;
 
+// Test route to verify this file is loaded
+Route::get('/test-route-loaded', function () {
+    return response()->json(['message' => 'routes/api.php is loaded!', 'time' => now()]);
+});
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
