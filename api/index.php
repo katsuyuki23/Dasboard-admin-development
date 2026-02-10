@@ -16,5 +16,9 @@ foreach ($storageDirs as $dir) {
 }
 
 // Forward Vercel requests to public/index.php
+// Fix for Vercel: Force script name to root index.php to avoid path stripping
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+$_SERVER['SCRIPT_FILENAME'] = __DIR__ . '/../public/index.php';
+
 require __DIR__ . '/../public/index.php';
 
