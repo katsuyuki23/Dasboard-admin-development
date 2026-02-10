@@ -43,4 +43,15 @@ return [
         'whatsapp_number' => env('TWILIO_WHATSAPP_NUMBER', 'whatsapp:+14155238886'),
     ],
 
+    'doku' => [
+        'client_id' => env('DOKU_CLIENT_ID'),
+        'secret_key' => env('DOKU_SECRET_KEY'),
+        'api_key' => env('DOKU_API_KEY'),
+        'base_url' => env('DOKU_BASE_URL', 'https://api-sandbox.doku.com'),
+        'is_production' => env('DOKU_IS_PRODUCTION', false),
+        'public_key' => env('DOKU_PUBLIC_KEY'),
+        'frontend_url' => env('APP_FRONTEND_URL', 'http://localhost:5173'),
+        'callback_url' => env('DOKU_CALLBACK_URL', env('APP_URL') . '/api/landing/payment/callback'),
+    ],
+
 ];

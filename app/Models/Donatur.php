@@ -13,7 +13,7 @@ class Donatur extends Model
     protected $primaryKey = 'id_donatur';
     
     protected $fillable = [
-        'user_id', 'nama', 'alamat', 'deskripsi'
+        'user_id', 'nama', 'email', 'no_hp', 'alamat', 'deskripsi'
     ];
 
     public function user()
