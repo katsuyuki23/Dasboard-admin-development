@@ -63,6 +63,10 @@
             "dest": "/public/favicon.ico"
         },
         {
+            "src": "/test_panti",
+            "dest": "/api/test_panti.php"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
