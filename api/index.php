@@ -33,5 +33,24 @@ if (isset($_GET['vercel_debug'])) {
     exit;
 }
 
-require __DIR__ . '/../public/index.php';
+// Wrap Laravel bootstrap to catch errors
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    // Log the error to stderr (visible in Vercel logs)
+    error_log('Laravel Bootstrap Error: ' . $e->getMessage());
+    error_log('File: ' . $e->getFile() . ':' . $e->getLine());
+    error_log('Stack trace: ' . $e->getTraceAsString());
+    
+    // Return JSON error for easier debugging
+    header('Content-Type: application/json', true, 500);
+    echo json_encode([
+        'error' => 'Laravel Bootstrap Failed',
+        'message' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine(),
+        'type' => get_class($e)
+    ]);
+    exit(1);
+}
 
