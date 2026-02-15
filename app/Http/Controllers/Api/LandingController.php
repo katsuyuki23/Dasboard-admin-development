@@ -115,16 +115,28 @@ class LandingController extends Controller
     {
         try {
             // Get recent donations with donatur info
+            // Show:
+            // 1. Manual Donations (snap_token is NULL) -> Always valid
+            // 2. Online Donations (snap_token NOT NULL) -> Only if 'success' or 'PAID'
+            
             $donations = Donasi::with('donatur')
-                // ->where('status_pembayaran', 'success') // Show all statuses as requested
+                ->where(function($query) {
+                    // Manual donations (usually created by admin, no snap_token)
+                    $query->whereNull('snap_token')
+                          // OR Online donations that are paid
+                          ->orWhere(function($subq) {
+                              $subq->whereNotNull('snap_token')
+                                   ->whereIn('status_pembayaran', ['success', 'PAID']);
+                          });
+                })
                 ->latest('tanggal_catat')
-                // ->take(6) // Show all data as requested
+                ->take(10) // Limit to 10
                 ->get()
                 ->map(function ($donasi) {
                     return [
                         'id' => $donasi->id_donasi,
                         'name' => $donasi->donatur ? $donasi->donatur->nama : ($donasi->sumber_non_donatur ?? 'Hamba Allah'),
-                        'amount' => $donasi->jumlah,
+                        'amount' => (int)$donasi->jumlah, // Ensure integer
                         'time' => $donasi->created_at->diffForHumans(),
                         'message' => $donasi->donatur ? $donasi->donatur->deskripsi : 'Semoga berkah...',
                         'initial' => substr($donasi->donatur ? $donasi->donatur->nama : 'H', 0, 1),

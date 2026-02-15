@@ -16,9 +16,17 @@ use App\Http\Controllers\LaporanController;
 |--------------------------------------------------------------------------
 */
 
-// Redirect root to login page
+// Landing Page Routes (Served from React Build)
 Route::get('/', function () {
-    return redirect()->route('login');
+    return file_get_contents(public_path('landing-assets/index.html'));
+});
+
+Route::get('/payment', function () {
+    return file_get_contents(public_path('landing-assets/index.html'));
+});
+
+Route::get('/success', function () {
+    return file_get_contents(public_path('landing-assets/index.html'));
 });
 
 Route::get('/donasi', [\App\Http\Controllers\PublicDonasiController::class, 'form'])->name('public.donasi.form');
@@ -26,6 +34,12 @@ Route::post('/donasi', [\App\Http\Controllers\PublicDonasiController::class, 'st
 Route::get('/donasi/success/{id}', [\App\Http\Controllers\PublicDonasiController::class, 'success'])->name('public.donasi.success');
 Route::get('/suara-donatur', [\App\Http\Controllers\PublicDonasiController::class, 'forum'])->name('public.donasi.forum');
 Route::post('/suara-donatur', [\App\Http\Controllers\PublicDonasiController::class, 'storePesan'])->name('public.donasi.pesan.store');
+
+// Meee Identical Routes
+Route::get('/donation', [\App\Http\Controllers\PublicDonasiController::class, 'donationForm'])->name('donation.form');
+Route::get('/donation/success', function () {
+    return redirect('/success' . (request()->has('order_id') ? '?order_id=' . request('order_id') : ''));
+});
 
 // Auth Routes
 Route::middleware(['block_admin_port'])->group(function () {
@@ -128,37 +142,8 @@ Route::get('/test-wa-group', function() {
     }
 });
 
-// Midtrans Callback (Exclude from CSRF in VerifyCsrfToken if needed, or use api routes)
-Route::post('/midtrans/callback', [\App\Http\Controllers\PaymentCallbackController::class, 'handle']);
-
-// Tripay Callback
-Route::post('/tripay/callback', [\App\Http\Controllers\TripayCallbackController::class, 'handle']);
-
 // WhatsApp Webhook (Exempt from CSRF in VerifyCsrfToken middleware)
 Route::post('/webhook/whatsapp', [\App\Http\Controllers\WhatsAppWebhookController::class, 'handle'])->name('webhook.whatsapp');
-
-// Helper to Simulate Tripay Callback (For Localhost Testing)
-Route::get('/test-tripay-simulation', function() {
-    $donasi = \App\Models\Donasi::where('status_pembayaran', 'pending')->latest('tanggal_catat')->first();
-    
-    if(!$donasi) return "Tidak ada donasi pending untuk dites.";
-
-    $merchantRef = 'DONASI-' . $donasi->id_donasi . '-' . time();
-    $amount = (int) $donasi->jumlah;
-    
-    $service = new \App\Services\TripayService();
-    $signature = $service->createSignature($amount, $merchantRef);
-
-    // Simulate Callback Payload
-    $response = \Illuminate\Support\Facades\Http::post(url('/tripay/callback'), [
-        'merchant_ref' => $merchantRef,
-        'total_amount' => $amount,
-        'status' => 'PAID',
-        'signature' => $signature
-    ]);
-
-    return "Simulasi dikirim untuk Donasi ID: $donasi->id_donasi. <br>Ref: $merchantRef <br>Status: " . $response->status() . " <br>Body: " . $response->body();
-});
 
 Route::get('/test-db', function() {
     try {
@@ -182,3 +167,4 @@ Route::get('/test-db', function() {
         return response()->json(['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()], 500);
     }
 });
+

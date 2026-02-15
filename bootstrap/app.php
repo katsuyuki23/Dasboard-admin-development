@@ -21,6 +21,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '/webhook/whatsapp',
             '/tripay/callback',
+            '/api/doku/callback',
+            '/api/landing/payment/callback',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

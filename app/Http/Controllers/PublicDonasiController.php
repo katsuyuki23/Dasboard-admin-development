@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Donasi;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pesan;
-use App\Services\TripayService;
 
 class PublicDonasiController extends Controller
 {
@@ -54,94 +53,30 @@ class PublicDonasiController extends Controller
         return view('landing', compact('recentDonasi', 'chartData', 'year', 'testimonials', 'activities'));
     }
 
-    public function form(TripayService $tripayService)
+    public function form()
     {
-        $channels = $tripayService->getPaymentChannels();
-        return view('public.donasi.form', compact('channels'));
+        // For now returning empty view or redirecting to DOKU flow
+        return view('public.donasi.form');
     }
 
-    public function store(Request $request, TripayService $tripayService)
+    public function donationForm()
+    {
+        $donations = Donasi::with('donatur')->orderBy('created_at', 'desc')->paginate(10);
+        return view('donation.form', compact('donations'));
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
-            'jumlah' => 'required|numeric|min:1000|max:100000000',
+            'jumlah' => 'required|numeric|min:10000',
             'keterangan' => 'nullable|string',
-            'method' => 'required|string' // Payment Method Code (e.g., BRIVA, QRIS)
+            'method' => 'required|string' // DOKU channel
         ]);
 
-        DB::beginTransaction();
-        try {
-            // Create Donasi Record
-            $donasi = Donasi::create([
-                'type_donasi' => 'NON_DONATUR',
-                'sumber_non_donatur' => 'NON_DONATUR',
-                'jumlah' => $request->jumlah,
-                'tanggal_catat' => now(),
-                'bulan' => now()->month,
-                'tahun' => now()->year,
-                'status_pembayaran' => 'pending'
-            ]);
-            
-            $merchantRef = 'DONASI-' . $donasi->id_donasi . '-' . time();
-            
-            // Prepare Customer Details for Tripay
-            $customerDetails = [
-                'nama' => $request->nama,
-                'email' => $request->email ?? 'no-email@example.com',
-                'telepon' => '08123456789' // Dummy/Default if not collected
-            ];
-
-            // Prepare Order Items (Single Item: Donasi)
-            $orderItems = [
-                [
-                    'sku' => 'DONASI-' . $donasi->id_donasi,
-                    'name' => 'Donasi Sukarela',
-                    'price' => (int) $request->jumlah,
-                    'quantity' => 1
-                ]
-            ];
-
-            // Request Transaction to Tripay
-            $tripayResponse = $tripayService->requestTransaction(
-                $request->method,
-                (int) $request->jumlah,
-                $customerDetails,
-                $orderItems,
-                $merchantRef
-            );
-
-            if (!$tripayResponse['success']) {
-                throw new \Exception($tripayResponse['message'] ?? 'Gagal menghubungi Payment Gateway.');
-            }
-
-            // Save reference or checkout url if needed?
-            // Midtrans used snap_token. Tripay provides 'checkout_url' and 'reference'.
-            // Ideally we store 'reference' in DB.
-            // For now, let's update snap_token column to hold the checkout_url merely for temporary storage if fields are limited,
-            // OR better, create/update a 'keterangan' or new column. 
-            // Since migration is expensive, I'll store the 'reference' in 'snap_token' column for now as a workaround 
-            // since that column is unused now.
-            $donasi->update(['snap_token' => $tripayResponse['data']['reference']]);
-
-            // Save Message to Forum if exists
-            if($request->filled('keterangan')) {
-                Pesan::create([
-                    'nama' => $request->nama,
-                    'email' => $request->email,
-                    'pesan' => $request->keterangan
-                ]);
-            }
-
-            DB::commit();
-
-            // Redirect to Tripay Checkout Page
-            return redirect($tripayResponse['data']['checkout_url']);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        }
+        // Logic handled by API/DokuController for modern implementation
+        return redirect()->route('public.donasi.success', ['id' => 'processing']);
     }
 
     public function success($id)

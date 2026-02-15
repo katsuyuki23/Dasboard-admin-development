@@ -55,6 +55,9 @@ class DokuService
                 ],
                 'payment' => [
                     'payment_due_date' => 1440, // 24 hours in minutes
+                    'payment_method_types' => [
+                        $paymentChannel['type']
+                    ]
                 ],
                 'customer' => [
                     'name' => $customerName,
@@ -134,15 +137,11 @@ class DokuService
                 'trace' => $e->getTraceAsString()
             ]);
             
-            // Return mock for testing
+            // Re-throw exception or return error to controller
+            // Do NOT return mock in production
             return [
-                'success' => true,
-                'payment_url' => config('services.doku.frontend_url') . '/success?order_id=' . $orderId . '&status=pending&mock=true',
-                'order_id' => $orderId,
-                'payment_channel' => 'Mock Payment',
-                'va_number' => null,
-                'qr_string' => null,
-                'expired_at' => now()->addHours(24)->format('Y-m-d H:i:s'),
+                'success' => false,
+                'message' => 'Gagal terhubung ke Payment Gateway: ' . $e->getMessage()
             ];
         }
     }

@@ -15,11 +15,15 @@ class Donasi extends Model
     protected $fillable = [
         'type_donasi', 'id_donatur', 'sumber_non_donatur',
         'bulan', 'tahun', 'jumlah', 'tanggal_catat',
-        'snap_token', 'status_pembayaran'
+        'snap_token', 'status_pembayaran',
+        // DOKU Columns
+        'order_id', 'payment_url', 'payment_method', 'payment_channel', 
+        'va_number', 'qr_string', 'expired_at', 'payment_info'
     ];
 
     protected $casts = [
         'tanggal_catat' => 'date',
+        'payment_info' => 'array',
     ];
 
     public function donatur()

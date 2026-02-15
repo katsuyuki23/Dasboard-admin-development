@@ -21,7 +21,13 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <select name="type_donasi" class="form-select bg-light border-0">
+                <select name="status" class="form-select bg-light border-0">
+                    <option value="" {{ request('status') == '' ? 'selected' : '' }}>Donasi Valid (Default)</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Tertunda (Pending)</option>
+                    <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                </select>
+            </div>
+            <div class="col-md-3">                <select name="type_donasi" class="form-select bg-light border-0">
                     <option value="">Semua Tipe</option>
                     <option value="DONATUR_TETAP" {{ request('type_donasi') == 'DONATUR_TETAP' ? 'selected' : '' }}>Donatur Tetap</option>
                     <option value="NON_DONATUR" {{ request('type_donasi') == 'NON_DONATUR' ? 'selected' : '' }}>Non Donatur</option>
