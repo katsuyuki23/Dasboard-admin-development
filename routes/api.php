@@ -24,10 +24,22 @@ Route::prefix('landing')->group(function () {
     // DOKU Payment Routes
     Route::prefix('payment')->group(function () {
         Route::post('/create', [DokuController::class, 'createPayment']);
-        Route::post('/callback', [DokuController::class, 'handleCallback']);
+        Route::match(['get', 'post'], '/callback', [DokuController::class, 'handleCallback']);
+        Route::post('/cancel', [DokuController::class, 'cancelPayment']);
         Route::get('/status/{orderId}', [DokuController::class, 'checkStatus']);
     });
 });
+
+// Meee Identical API
+Route::prefix('v1')->group(function () {
+    Route::post('/donation', [DokuController::class, 'createPayment']);
+    Route::get('/donation/success', function() {
+        return redirect('/donation/success');
+    });
+});
+
+// DOKU Callback (Identical to @meee)
+Route::match(['get', 'post'], '/doku/callback', [DokuController::class, 'handleCallback']);
 
 Route::get('/test-db', function() {
     try {

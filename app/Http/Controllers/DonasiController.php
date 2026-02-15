@@ -9,8 +9,6 @@ use App\Models\KategoriTransaksi;
 use App\Models\TransaksiKas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Midtrans\Config;
-use Midtrans\Snap;
 
 class DonasiController extends Controller
 {
@@ -40,6 +38,23 @@ class DonasiController extends Controller
 
         if ($request->filled('tahun')) {
             $query->where('tahun', $request->tahun);
+        }
+
+        if ($request->filled('tahun')) {
+            $query->where('tahun', $request->tahun);
+        }
+
+        // Default Filter: Hide Pending Online Donations unless specifically asked
+        if ($request->has('status')) {
+            if ($request->status != 'all') {
+                $query->where('status_pembayaran', $request->status);
+            }
+        } else {
+            // Default behavior: Show Manual (Null) OR Success/Paid
+            $query->where(function($q) {
+                $q->whereNull('status_pembayaran')
+                  ->orWhereIn('status_pembayaran', ['success', 'PAID']);
+            });
         }
 
         $donasi = $query->latest('tanggal_catat')->latest('id_donasi')->paginate(10);
@@ -124,33 +139,10 @@ class DonasiController extends Controller
             $detail = "Mencatat donasi Rp " . number_format($donasi->jumlah, 0, ',', '.') . " dari " . $namaDonaturForLog;
             $this->logActivity('CREATE', 'DONASI', $detail);
 
-            // Handle Midtrans Snap Token if Online Payment
+            // Handle DOKU Payment if Online Payment
             if ($request->metode_pembayaran == 'online') {
-                Config::$serverKey = config('midtrans.server_key');
-                Config::$isProduction = config('midtrans.is_production');
-                Config::$isSanitized = config('midtrans.is_sanitized');
-                Config::$is3ds = config('midtrans.is_3ds');
-
-                $params = [
-                    'transaction_details' => [
-                        'order_id' => 'DONASI-' . $donasi->id_donasi . '-' . time(),
-                        'gross_amount' => (int) $donasi->jumlah,
-                    ],
-                    'customer_details' => [
-                        'first_name' => $donasi->donatur->nama ?? 'Hamba Allah',
-                        'email' => $donasi->donatur->email ?? 'noreply@yayasan.org',
-                    ],
-                ];
-
-                try {
-                    $snapToken = Snap::getSnapToken($params);
-                    $donasi->update([
-                        'snap_token' => $snapToken,
-                        'status_pembayaran' => 'pending'
-                    ]);
-                } catch (\Exception $e) {
-                    \Log::error('Midtrans Snap Error: ' . $e->getMessage());
-                }
+                // Redirect to DokuController@createPayment logic would happen frontend side
+                // For admin manual recording of online, we just mark as pending or redirect
             }
         });
 
