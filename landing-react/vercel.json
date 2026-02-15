@@ -1,7 +1,4 @@
 {
-    "framework": "vite",
-    "buildCommand": "cd landing-react && npm install && npm run build",
-    "outputDirectory": "landing-react/dist",
     "rewrites": [
         {
             "source": "/(.*)",
